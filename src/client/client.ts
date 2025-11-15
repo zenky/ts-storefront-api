@@ -1,16 +1,16 @@
-import {ClientConfig} from "./types.ts";
-import {ZenkyErrorBuilder} from "./errors.ts";
+import { ClientConfig } from "./types.ts";
+import { ZenkyErrorBuilder } from "./errors.ts";
 
 export class Client {
   private readonly baseUrl: string;
   private readonly baseAuthUrl: string;
-  private token: string|null;
+  private token: string | null;
   private readonly client: string;
   private readonly timezone: string;
   private readonly fetchFunction: any;
   private readonly fetchOptions: any;
 
-  static build(config?: ClientConfig|null|undefined, fetcher?: any): Client {
+  static build(config?: ClientConfig | null | undefined, fetcher?: any): Client {
     return new Client(
       config?.baseUrl || 'https://storefront.zenky.io/v1',
       config?.baseAuthUrl || 'https://auth.zenky.io/',
@@ -25,11 +25,11 @@ export class Client {
   private constructor(
     baseUrl: string,
     baseAuthUrl: string,
-    token: string|null,
+    token: string | null,
     client: string,
     timezone: string,
     fetcher?: any,
-    fetchOptions?: any
+    fetchOptions?: any,
   ) {
     this.baseUrl = baseUrl;
     this.baseAuthUrl = baseAuthUrl;
@@ -40,7 +40,7 @@ export class Client {
     this.fetchOptions = typeof fetchOptions !== 'undefined' ? fetchOptions : {};
   }
 
-  setToken(token: string|null): Client {
+  setToken(token: string | null): Client {
     this.token = token;
 
     return this;

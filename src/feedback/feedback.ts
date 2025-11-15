@@ -1,5 +1,5 @@
-import {AbstractResource} from "../client/resource.ts";
-import {CallbackRequest, Feedback, FeedbackRequest} from "./types.ts";
+import { AbstractResource } from "../client/resource.ts";
+import { CallbackRequest, Feedback, FeedbackRequest } from "./types.ts";
 
 export class FeedbackResource extends AbstractResource {
   async createFeedback(storeId: string, request: FeedbackRequest): Promise<Feedback> {

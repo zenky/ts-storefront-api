@@ -1,4 +1,4 @@
-import {ApiError} from "../types.ts";
+import { ApiError } from "../types.ts";
 
 export class ZenkyError extends Error {
   public readonly err: ApiError | null;

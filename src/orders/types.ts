@@ -1,16 +1,16 @@
 import { Discount, DiscountType, Phone, PhoneRequest, RecaptchaRequest } from "../types.ts";
-import {City, DeliveryZone, Stock} from "../store/types.ts";
+import { City, DeliveryZone, Stock } from "../store/types.ts";
+import { Product, ProductModifiersRequest, ProductVariant } from "../products/types.ts";
+import { BasicModifiersGroup, Modifier } from "../modifiers/types.ts";
+import { Customer, Gender } from "../customers/types.ts";
+import { ListRequest } from "../client/types.ts";
+import { ConfirmationMethod } from "../authentication/types.ts";
 import {
   DadataDeliveryAddressRequest,
   DeliveryAddress,
   ExistedDeliveryAddressRequest,
-  ManualDeliveryAddressRequest
+  ManualDeliveryAddressRequest,
 } from "../addresses/types.ts";
-import {Product, ProductModifiersRequest, ProductVariant} from "../products/types.ts";
-import {BasicModifiersGroup, Modifier} from "../modifiers/types.ts";
-import {Customer, Gender} from "../customers/types.ts";
-import {ListRequest} from "../client/types.ts";
-import {ConfirmationMethod} from "../authentication/types.ts";
 
 export type OrderCredentials = string | {
   id: string;

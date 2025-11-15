@@ -1,6 +1,6 @@
-import {Media} from "../media/types.ts";
-import {Seo} from "../seo/types.ts";
-import {ListRequest} from "../client/types.ts";
+import { Media } from "../media/types.ts";
+import { Seo } from "../seo/types.ts";
+import { ListRequest } from "../client/types.ts";
 
 export interface Category {
   id: string;

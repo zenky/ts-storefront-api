@@ -1,3 +1,4 @@
+import { Media } from "../media/types.ts";
 import {
   AddressesProvider,
   Contact,
@@ -5,9 +6,8 @@ import {
   OrderAuthenticationMethod,
   Phone,
   RecaptchaAction,
-  Schedule
+  Schedule,
 } from "../types.ts";
-import {Media} from "../media/types.ts";
 
 export interface Stock {
   id: string;
@@ -50,9 +50,19 @@ export interface StoreSettings {
     authentication_method: OrderAuthenticationMethod;
     use_early_delivery: boolean;
     addresses_provider: AddressesProvider;
+    repeats: {
+      enabled: boolean;
+    };
+    checkout_ui: {
+      enabled: boolean;
+      message: string | null;
+    };
   };
   products: {
     use_stock_filter: boolean;
+    search: {
+      enabled: boolean;
+    };
   };
   loyalty: {
     enabled: boolean;

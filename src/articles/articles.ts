@@ -1,6 +1,6 @@
-import {AbstractResource} from "../client/resource.ts";
-import {InclusionRequest, PaginatedResponse} from "../client/types.ts";
-import {ArticleCategory, ListArticlesRequest} from "./types.ts";
+import { AbstractResource } from "../client/resource.ts";
+import { InclusionRequest, PaginatedResponse } from "../client/types.ts";
+import { ArticleCategory, ListArticlesRequest } from "./types.ts";
 
 export class ArticlesResource extends AbstractResource {
   async getArticleCategories(storeId: string): Promise<PaginatedResponse<ArticleCategory>> {

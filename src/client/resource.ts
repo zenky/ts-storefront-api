@@ -1,5 +1,5 @@
-import {PaginatedResponse} from "./types.ts";
-import {Client} from "./client.ts";
+import { PaginatedResponse } from "./types.ts";
+import { Client } from "./client.ts";
 
 export abstract class AbstractResource {
   constructor(protected client: Client) {

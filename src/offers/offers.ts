@@ -1,6 +1,6 @@
-import {AbstractResource} from "../client/resource.ts";
-import {InclusionRequest, ListRequest, PaginatedResponse} from "../client/types.ts";
-import {Offer} from "./types.ts";
+import { AbstractResource } from "../client/resource.ts";
+import { InclusionRequest, ListRequest, PaginatedResponse } from "../client/types.ts";
+import { Offer } from "./types.ts";
 
 export class OffersResource extends AbstractResource {
   async getOffers(storeId: string, request?: ListRequest): Promise<PaginatedResponse<Offer>> {

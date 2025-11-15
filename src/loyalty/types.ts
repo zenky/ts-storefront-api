@@ -1,4 +1,4 @@
-import {PaginationRequest} from "../client/types.ts";
+import { PaginationRequest } from "../client/types.ts";
 
 export interface BonusesLevel {
   id: string;

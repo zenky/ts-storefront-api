@@ -1,5 +1,5 @@
-import {Media} from "../media/types.ts";
-import {ListRequest} from "../client/types.ts";
+import { Media } from "../media/types.ts";
+import { ListRequest } from "../client/types.ts";
 
 export interface ArticleCategory {
   id: string;

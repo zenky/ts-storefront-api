@@ -35,8 +35,8 @@ export interface Pagination {
   current_page: number;
   total_pages: number;
   links: {
-    previous?: string|null;
-    next?: string|null;
+    previous?: string | null;
+    next?: string | null;
   };
   has_previous_page: boolean;
   has_next_page: boolean;

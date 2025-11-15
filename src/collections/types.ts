@@ -1,5 +1,5 @@
-import {Media} from "../media/types.ts";
-import {OrderingRequest, PaginationRequest, SearchRequest} from "../client/types.ts";
+import { Media } from "../media/types.ts";
+import { OrderingRequest, PaginationRequest, SearchRequest } from "../client/types.ts";
 
 export interface ProductsCollection {
   id: string;

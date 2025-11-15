@@ -1,5 +1,5 @@
-import {AbstractResource} from "../client/resource.ts";
-import {Store} from "./types.ts";
+import { AbstractResource } from "../client/resource.ts";
+import { Store } from "./types.ts";
 
 export class StoreResource extends AbstractResource {
   async getStore(storeId: string): Promise<Store> {

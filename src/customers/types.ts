@@ -1,7 +1,7 @@
-import {Phone} from "../types.ts";
-import {BonusesLevel, LoyaltyRates} from "../loyalty/types.ts";
-import {Media} from "../media/types.ts";
-import {DadataDeliveryAddressRequest, ManualDeliveryAddressRequest} from "../addresses/types.ts";
+import { Phone } from "../types.ts";
+import { BonusesLevel, LoyaltyRates } from "../loyalty/types.ts";
+import { Media } from "../media/types.ts";
+import { DadataDeliveryAddressRequest, ManualDeliveryAddressRequest } from "../addresses/types.ts";
 
 export enum Gender {
   Female = 'female',

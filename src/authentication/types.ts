@@ -1,5 +1,5 @@
 import { PhoneRequest, RecaptchaRequest } from "../types.ts";
-import {Gender} from "../customers/types.ts";
+import { Gender } from "../customers/types.ts";
 
 export enum ConfirmationMethod {
   Sms = 'sms',

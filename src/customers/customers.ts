@@ -1,14 +1,14 @@
-import {AbstractResource} from "../client/resource.ts";
+import { AbstractResource } from "../client/resource.ts";
+import { InclusionRequest, ListRequest, PaginatedResponse, PaginationRequest } from "../client/types.ts";
+import { DeliveryAddress } from "../addresses/types.ts";
+import { BonusesTransaction, ListCustomerBonusesTransactionsRequest } from "../loyalty/types.ts";
 import {
   Customer, CustomerPaymentMethod,
   CustomerSettings, DeliveryAddressRequest,
   RemoveCustomerProfileRequest, ResolverBonusesBalance,
   UpdateCustomerProfileRequest,
-  UpdateCustomerSettingsRequest
+  UpdateCustomerSettingsRequest,
 } from "./types.ts";
-import {InclusionRequest, ListRequest, PaginatedResponse, PaginationRequest} from "../client/types.ts";
-import {DeliveryAddress} from "../addresses/types.ts";
-import {BonusesTransaction, ListCustomerBonusesTransactionsRequest} from "../loyalty/types.ts";
 
 export class CustomersResource extends AbstractResource {
   async getProfile(storeId: string, request?: InclusionRequest, apiToken?: string): Promise<Customer> {

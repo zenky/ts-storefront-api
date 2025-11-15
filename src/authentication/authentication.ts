@@ -1,4 +1,6 @@
-import {AbstractResource} from "../client/resource.ts";
+import Postmate from 'postmate';
+import { AbstractResource } from "../client/resource.ts";
+import { PhoneRequest } from "../types.ts";
 import {
   AuthConfirmationStatus,
   AuthenticationModalProvider,
@@ -12,8 +14,6 @@ import {
   ResendAuthConfirmationRequest,
   ResetPasswordRequest,
 } from "./types.ts";
-import Postmate from 'postmate';
-import { PhoneRequest } from "../types.ts";
 
 export class AuthenticationResource extends AbstractResource {
   async checkPhone(storeId: string, request: CheckPhoneRequest): Promise<PhoneCheckResult> {
@@ -60,9 +60,9 @@ export class AuthenticationResource extends AbstractResource {
 
   useAuthenticationModal(
     storeId: string,
-    iframeContainer: string|HTMLElement,
+    iframeContainer: string | HTMLElement,
     callback: (token: string, phone: PhoneRequest, storeId: string) => void,
-    postmateParams: any = {}
+    postmateParams: any = {},
   ): AuthenticationModalProvider {
     const url = `${this.client.getBaseAuthUrl()}/?store_id=${storeId}&response_type=post_message`;
 

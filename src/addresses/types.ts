@@ -1,4 +1,4 @@
-import {AddressesProvider, GeoLocation} from "../types.ts";
+import { AddressesProvider, GeoLocation } from "../types.ts";
 
 export interface DeliveryAddress {
   id: string;

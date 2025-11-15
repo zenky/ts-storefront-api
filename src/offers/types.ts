@@ -1,4 +1,4 @@
-import {Media} from "../media/types.ts";
+import { Media } from "../media/types.ts";
 
 export interface OfferBanner {
   title: string | null;

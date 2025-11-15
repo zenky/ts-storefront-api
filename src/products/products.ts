@@ -1,12 +1,12 @@
-import {AbstractResource} from "../client/resource.ts";
+import { AbstractResource } from "../client/resource.ts";
 import {
   ListProductsRequest,
   Product,
   ProductVariantPriceCalculation,
   ProductVariantPriceCalculationRequest,
-  ViewProductRequest
+  ViewProductRequest,
 } from "./types.ts";
-import {PaginatedResponse} from "../client/types.ts";
+import { PaginatedResponse } from "../client/types.ts";
 
 export class ProductsResource extends AbstractResource {
   async getProducts(storeId: string, request?: ListProductsRequest): Promise<PaginatedResponse<Product>> {
@@ -25,7 +25,7 @@ export class ProductsResource extends AbstractResource {
     storeId: string,
     productId: string,
     variantId: string,
-    request: ProductVariantPriceCalculationRequest
+    request: ProductVariantPriceCalculationRequest,
   ): Promise<ProductVariantPriceCalculation> {
     const url = this.getStoreUrl(storeId, `/products/${productId}/variants/${variantId}/price`);
 

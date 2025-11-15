@@ -1,10 +1,10 @@
-import {Category} from "../categories/types.ts";
-import {Media} from "../media/types.ts";
-import {Feature, FeaturesGroup} from "../features/types.ts";
-import {Seo} from "../seo/types.ts";
-import {ProductModifier, ProductModifiersGroup} from "../modifiers/types.ts";
-import {Discount, TernaryFilter} from "../types.ts";
-import {InclusionRequest, ListRequest} from "../client/types.ts";
+import { Category } from "../categories/types.ts";
+import { Media } from "../media/types.ts";
+import { Feature, FeaturesGroup } from "../features/types.ts";
+import { Seo } from "../seo/types.ts";
+import { ProductModifier, ProductModifiersGroup } from "../modifiers/types.ts";
+import { Discount, TernaryFilter } from "../types.ts";
+import { InclusionRequest, ListRequest } from "../client/types.ts";
 
 export enum UnitType {
   Piece = 'piece',

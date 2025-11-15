@@ -1,5 +1,5 @@
-import {AbstractResource} from "../client/resource.ts";
-import {AddressSuggestions, AddressSuggestionsRequest} from "./types.ts";
+import { AbstractResource } from "../client/resource.ts";
+import { AddressSuggestions, AddressSuggestionsRequest } from "./types.ts";
 
 export class AddressesResource extends AbstractResource {
   async getAddressSuggestions(storeId: string, request: AddressSuggestionsRequest): Promise<AddressSuggestions> {

@@ -1,4 +1,6 @@
-import {AbstractResource} from "../client/resource.ts";
+import { AbstractResource } from "../client/resource.ts";
+import { InclusionRequest, PaginatedResponse } from "../client/types.ts";
+import { BonusesTransaction, ListBonusesTransactionsRequest } from "../loyalty/types.ts";
 import {
   CloudpaymentsTransactionReceipt,
   ConfirmOrderRequest,
@@ -16,10 +18,8 @@ import {
   OrderSettings,
   SetOrderCustomerRequest,
   SetOrderDeliveryRequest,
-  SetOrderPaymentsRequest
+  SetOrderPaymentsRequest,
 } from "./types.ts";
-import {InclusionRequest, PaginatedResponse} from "../client/types.ts";
-import {BonusesTransaction, ListBonusesTransactionsRequest} from "../loyalty/types.ts";
 
 export class OrdersResource extends AbstractResource {
   protected getOrderUrl(storeId: string, credentials: OrderCredentials, path: string, request?: any): string {
@@ -53,7 +53,7 @@ export class OrdersResource extends AbstractResource {
     const url = this.getOrderUrl(storeId, credentials, '', request);
 
     return this.getResponse<Order>(
-      await this.client.request('GET', url, undefined, this.getApiToken(credentials))
+      await this.client.request('GET', url, undefined, this.getApiToken(credentials)),
     );
   }
 
@@ -61,31 +61,31 @@ export class OrdersResource extends AbstractResource {
     const url = this.getOrderUrl(storeId, credentials, '/settings');
 
     return this.getResponse<OrderSettings>(
-      await this.client.request('GET', url, undefined, this.getApiToken(credentials))
+      await this.client.request('GET', url, undefined, this.getApiToken(credentials)),
     );
   }
 
   async addProductVariantToOrder(
     storeId: string,
     credentials: OrderCredentials,
-    request: OrderProductVariantRequest
+    request: OrderProductVariantRequest,
   ): Promise<Order> {
     const url = this.getOrderUrl(storeId, credentials, '/products');
 
     return this.getResponse<Order>(
-      await this.client.request('POST', url, request, this.getApiToken(credentials))
+      await this.client.request('POST', url, request, this.getApiToken(credentials)),
     );
   }
 
   async removeProductVariantFromOrder(
     storeId: string,
     credentials: OrderCredentials,
-    request: OrderProductVariantRequest
+    request: OrderProductVariantRequest,
   ): Promise<Order> {
     const url = this.getOrderUrl(storeId, credentials, '/products/remove');
 
     return this.getResponse<Order>(
-      await this.client.request('POST', url, request, this.getApiToken(credentials))
+      await this.client.request('POST', url, request, this.getApiToken(credentials)),
     );
   }
 
@@ -96,7 +96,7 @@ export class OrdersResource extends AbstractResource {
     const url = this.getOrderUrl(storeId, credentials, '/products/check');
 
     return this.getResponse<OrderCartCheckerResult>(
-      await this.client.request('POST', url, undefined, this.getApiToken(credentials))
+      await this.client.request('POST', url, undefined, this.getApiToken(credentials)),
     );
   }
 
@@ -104,7 +104,7 @@ export class OrdersResource extends AbstractResource {
     const url = this.getOrderUrl(storeId, credentials, '/checkout/url');
 
     const response = this.getResponse<{ url: string }>(
-      await this.client.request('POST', url, { redirect_url: redirectUrl }, this.getApiToken(credentials))
+      await this.client.request('POST', url, {redirect_url: redirectUrl}, this.getApiToken(credentials)),
     );
 
     return response.url;
@@ -113,7 +113,7 @@ export class OrdersResource extends AbstractResource {
   async setOrderCustomer(
     storeId: string,
     credentials: OrderCredentials,
-    request: SetOrderCustomerRequest
+    request: SetOrderCustomerRequest,
   ): Promise<boolean> {
     const url = this.getOrderUrl(storeId, credentials, '/checkout/customer');
 
@@ -125,36 +125,36 @@ export class OrdersResource extends AbstractResource {
   async setOrderDeliveryMethod(
     storeId: string,
     credentials: OrderCredentials,
-    request: SetOrderDeliveryRequest
+    request: SetOrderDeliveryRequest,
   ): Promise<Order> {
     const url = this.getOrderUrl(storeId, credentials, '/checkout/delivery');
 
     return this.getResponse<Order>(
-      await this.client.request('POST', url, request, this.getApiToken(credentials))
+      await this.client.request('POST', url, request, this.getApiToken(credentials)),
     );
   }
 
   async setOrderPayments(
     storeId: string,
     credentials: OrderCredentials,
-    request: SetOrderPaymentsRequest
+    request: SetOrderPaymentsRequest,
   ): Promise<Order> {
     const url = this.getOrderUrl(storeId, credentials, '/checkout/payments');
 
     return this.getResponse<Order>(
-      await this.client.request('POST', url, request, this.getApiToken(credentials))
+      await this.client.request('POST', url, request, this.getApiToken(credentials)),
     );
   }
 
   async getOrderBonusesPreview(
     storeId: string,
     credentials: OrderCredentials,
-    amount: number | string
+    amount: number | string,
   ): Promise<OrderCheckoutBonusesPreview> {
-    const url = this.getOrderUrl(storeId, credentials, `/checkout/payments/bonuses`, { amount });
+    const url = this.getOrderUrl(storeId, credentials, `/checkout/payments/bonuses`, {amount});
 
     return this.getResponse<OrderCheckoutBonusesPreview>(
-      await this.client.request('GET', url, undefined, this.getApiToken(credentials))
+      await this.client.request('GET', url, undefined, this.getApiToken(credentials)),
     );
   }
 
@@ -165,7 +165,7 @@ export class OrdersResource extends AbstractResource {
     const url = this.getOrderUrl(storeId, credentials, `/checkout/total`);
 
     return this.getResponse<OrderCheckoutTotal>(
-      await this.client.request('GET', url, undefined, this.getApiToken(credentials))
+      await this.client.request('GET', url, undefined, this.getApiToken(credentials)),
     );
   }
 
@@ -177,14 +177,14 @@ export class OrdersResource extends AbstractResource {
     const url = this.getOrderUrl(storeId, credentials, `/checkout`);
 
     return this.getResponse<OrderCheckoutResult>(
-      await this.client.request('POST', url, request, this.getApiToken(credentials))
+      await this.client.request('POST', url, request, this.getApiToken(credentials)),
     );
   }
 
   async confirmOrder(
     storeId: string,
     credentials: OrderCredentials,
-    request: ConfirmOrderRequest
+    request: ConfirmOrderRequest,
   ): Promise<boolean> {
     const url = this.getOrderUrl(storeId, credentials, `/confirm`);
 
@@ -207,23 +207,23 @@ export class OrdersResource extends AbstractResource {
   async getOrderBonusesTransactions(
     storeId: string,
     credentials: OrderCredentials,
-    request?: ListBonusesTransactionsRequest
+    request?: ListBonusesTransactionsRequest,
   ): Promise<PaginatedResponse<BonusesTransaction>> {
     const url = this.getOrderUrl(storeId, credentials, `/loyalty/transactions`, request);
 
     return this.getPaginatedResponse<BonusesTransaction>(
-      await this.client.request('GET', url, undefined, this.getApiToken(credentials))
+      await this.client.request('GET', url, undefined, this.getApiToken(credentials)),
     );
   }
 
   async getOrderCashbackTransaction(
     storeId: string,
-    credentials: OrderCredentials
+    credentials: OrderCredentials,
   ): Promise<BonusesTransaction> {
     const url = this.getOrderUrl(storeId, credentials, `/loyalty/transactions/cashback`);
 
     return this.getResponse<BonusesTransaction>(
-      await this.client.request('GET', url, undefined, this.getApiToken(credentials))
+      await this.client.request('GET', url, undefined, this.getApiToken(credentials)),
     );
   }
 
@@ -234,18 +234,18 @@ export class OrdersResource extends AbstractResource {
     const url = this.getOrderUrl(storeId, credentials, `/loyalty/promotions/check`);
 
     return this.getResponse<{ dispatched: boolean }>(
-      await this.client.request('POST', url, undefined, this.getApiToken(credentials))
+      await this.client.request('POST', url, undefined, this.getApiToken(credentials)),
     ).dispatched;
   }
 
   async getOrderPromotionRewards(
     storeId: string,
-    credentials: OrderCredentials
+    credentials: OrderCredentials,
   ): Promise<OrderPromotionReward> {
     const url = this.getOrderUrl(storeId, credentials, `/loyalty/promotions/rewards`);
 
     return this.getResponse<OrderPromotionReward>(
-      await this.client.request('GET', url, undefined, this.getApiToken(credentials))
+      await this.client.request('GET', url, undefined, this.getApiToken(credentials)),
     );
   }
 
@@ -257,7 +257,7 @@ export class OrdersResource extends AbstractResource {
     const url = this.getOrderUrl(storeId, credentials, `/payments/${transactionId}/receipt`);
 
     return this.getResponse<CloudpaymentsTransactionReceipt>(
-      await this.client.request('GET', url, undefined, this.getApiToken(credentials))
+      await this.client.request('GET', url, undefined, this.getApiToken(credentials)),
     );
   }
 }
