@@ -6,6 +6,8 @@ import {
   ConfirmOrderRequest,
   CreateOrderRequest,
   ListOrdersRequest,
+  OnlinePaymentRedirect,
+  OnlinePaymentRedirectRequest,
   Order,
   OrderCartCheckerResult,
   OrderCheckoutBonusesPreview,
@@ -14,11 +16,13 @@ import {
   OrderCheckoutTotal,
   OrderCredentials,
   OrderProductVariantRequest,
+  OrderPromocode,
   OrderPromotionReward,
   OrderSettings,
   SetOrderCustomerRequest,
   SetOrderDeliveryRequest,
   SetOrderPaymentsRequest,
+  SetOrderPromocodeRequest,
 } from "./types.ts";
 
 export class OrdersResource extends AbstractResource {
@@ -146,6 +150,38 @@ export class OrdersResource extends AbstractResource {
     );
   }
 
+  async getOrderPromocode(
+    storeId: string,
+    credentials: OrderCredentials,
+    request: SetOrderPromocodeRequest,
+  ): Promise<OrderPromocode | null> {
+    const url = this.getOrderUrl(storeId, credentials, '/checkout/promocode');
+
+    return this.getResponse<OrderPromocode | null>(
+      await this.client.request('GET', url, request, this.getApiToken(credentials)),
+    );
+  }
+
+  async setOrderPromocode(
+    storeId: string,
+    credentials: OrderCredentials,
+    request: SetOrderPromocodeRequest,
+  ): Promise<OrderPromocode> {
+    const url = this.getOrderUrl(storeId, credentials, '/checkout/promocode');
+
+    return this.getResponse<OrderPromocode>(
+      await this.client.request('POST', url, request, this.getApiToken(credentials)),
+    );
+  }
+
+  async removeOrderPromocode(storeId: string, credentials: OrderCredentials): Promise<boolean> {
+    const url = this.getOrderUrl(storeId, credentials, '/checkout/promocode');
+
+    await this.client.request('DELETE', url, null, this.getApiToken(credentials))
+
+    return true;
+  }
+
   async getOrderBonusesPreview(
     storeId: string,
     credentials: OrderCredentials,
@@ -189,6 +225,17 @@ export class OrdersResource extends AbstractResource {
     const url = this.getOrderUrl(storeId, credentials, `/confirm`);
 
     await this.client.request('POST', url, request, this.getApiToken(credentials));
+
+    return true;
+  }
+
+  async cancelOrder(
+    storeId: string,
+    credentials: OrderCredentials,
+  ): Promise<boolean> {
+    const url = this.getOrderUrl(storeId, credentials, `/cancel`);
+
+    await this.client.request('POST', url, undefined, this.getApiToken(credentials));
 
     return true;
   }
@@ -258,6 +305,19 @@ export class OrdersResource extends AbstractResource {
 
     return this.getResponse<CloudpaymentsTransactionReceipt>(
       await this.client.request('GET', url, undefined, this.getApiToken(credentials)),
+    );
+  }
+
+  async getOnlinePaymentRedirect(
+    storeId: string,
+    credentials: OrderCredentials,
+    transactionId: string,
+    request?: OnlinePaymentRedirectRequest,
+  ): Promise<OnlinePaymentRedirect | null> {
+    const url = this.getOrderUrl(storeId, credentials, `/payments/${transactionId}/redirect`);
+
+    return this.getResponse<OnlinePaymentRedirect | null>(
+      await this.client.request('POST', url, request, this.getApiToken(credentials)),
     );
   }
 }

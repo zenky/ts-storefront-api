@@ -12,6 +12,7 @@ import { AddressesResource } from "../addresses/addresses.ts";
 import { CustomersResource } from "../customers/customers.ts";
 import { AuthenticationResource } from "../authentication/authentication.ts";
 import { CatalogResource } from '../catalog/catalog.ts';
+import { LoyaltyResource } from '../loyalty/loyalty.ts';
 
 export class ZenkyStorefront {
   public readonly client: Client;
@@ -27,6 +28,7 @@ export class ZenkyStorefront {
   public readonly offers: OffersResource;
   public readonly articles: ArticlesResource;
   public readonly feedback: FeedbackResource;
+  public readonly loyalty: LoyaltyResource;
 
   constructor(config?: ClientConfig, fetcher?: any) {
     const client = Client.build(config, fetcher);
@@ -43,6 +45,7 @@ export class ZenkyStorefront {
     this.offers = new OffersResource(client);
     this.articles = new ArticlesResource(client);
     this.feedback = new FeedbackResource(client);
+    this.loyalty = new LoyaltyResource(client);
 
     this.client = client;
   }

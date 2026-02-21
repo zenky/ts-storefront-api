@@ -49,6 +49,7 @@ export enum PaymentMethod {
   Cash = 'cash',
   CreditCard = 'credit-card',
   CloudPayments = 'cloudpayments',
+  YooKassa = 'yookassa',
   CardToken = 'card_token',
   Bonuses = 'bonuses',
 }
@@ -101,12 +102,17 @@ export interface CloudpaymentsPaymentMeta {
   charged_as: CloudpaymentsChargeType | null;
 }
 
+export interface OnlinePaymentRedirect {
+  redirect_url: string | null;
+}
+
 export interface OrderPaymentTransaction {
   id: string;
   type: OrderPaymentTransactionType;
   status: OrderPaymentTransactionStatus;
   method: PaymentMethod;
   amount: number;
+  is_online: boolean;
   created_at: string;
   confirmed_at: string | null;
   authorization_confirmed_at: string | null;
@@ -154,6 +160,8 @@ export interface OrderProductVariant {
     id: string;
     reward_id: string;
   } | null;
+  is_reward: boolean;
+  is_promocode_reward: boolean;
   quantity: number;
   has_measured_quantity: boolean;
   measured_quantity: number | null;
@@ -196,6 +204,7 @@ export interface Order {
   statuses?: OrderStatus[];
   progress?: OrderStatusProgress[];
   payments?: OrderPaymentTransaction[];
+  promocode?: OrderPromocode | null;
 }
 
 export interface OrderPaymentMethod {
@@ -332,6 +341,10 @@ export interface SetOrderPaymentsRequest {
   payments: OrderPaymentMethodRequest[];
 }
 
+export interface SetOrderPromocodeRequest {
+  promocode: string;
+}
+
 export interface OrderCheckoutBonusesPreview {
   bonuses: number;
   unpaid: number;
@@ -397,4 +410,14 @@ export interface OrderPromotionReward {
   amount: number | null;
   total_amount: number | null;
   count: number;
+}
+
+export interface OrderPromocode {
+  type: 'plain';
+  promocode: string;
+  message: string;
+}
+
+export interface OnlinePaymentRedirectRequest {
+  current_url?: string;
 }

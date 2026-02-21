@@ -1,6 +1,6 @@
 {
   "name": "@zenky/storefront-api",
-  "version": "0.0.35",
+  "version": "0.0.49",
   "description": "Zenky Storefront API SDK",
   "author": "Timur Zurbaev <hello@zurbaev.ru>",
   "license": "MIT",

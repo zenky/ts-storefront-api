@@ -1,16 +1,15 @@
 import { PaginationRequest } from "../client/types.ts";
 
+export interface LoyaltyRates {
+  cashback: number | null;
+  payment: number | null;
+}
+
 export interface BonusesLevel {
   id: string;
   name: string;
   expenses: number;
-  cashback_rate: number | null;
-  payment_rate: number | null;
-}
-
-export interface LoyaltyRates {
-  cashback: number | null;
-  payment: number | null;
+  rates: LoyaltyRates;
 }
 
 export enum BonusesTransactionType {

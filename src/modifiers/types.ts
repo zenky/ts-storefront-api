@@ -21,8 +21,12 @@ export interface ProductModifier {
   max_quantity: number | null;
 }
 
+export interface ProductModifiersGroupInfo extends BasicModifiersGroup {
+  modifiers: ProductModifier[];
+}
+
 export interface ProductModifiersGroup {
-  group: ModifiersGroup;
+  group: ProductModifiersGroupInfo;
   is_required: boolean;
   min_quantity: number | null;
   max_quantity: number | null;

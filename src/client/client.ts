@@ -62,6 +62,10 @@ export class Client {
     const params: string[] = [];
 
     Object.keys(query).forEach((key) => {
+      if (query[key] === undefined || query[key] === null) {
+        return;
+      }
+
       params.push(`${key}=${query[key]}`);
     });
 
@@ -71,6 +75,8 @@ export class Client {
   }
 
   async request(method: string, path: string, body?: any, apiToken?: string | null): Promise<any> {
+    const isExternalUrl = !path.startsWith('/');
+
     const headers: any = {
       Accept: 'application/json',
       'X-Zenky-Client': this.client,
@@ -94,9 +100,11 @@ export class Client {
       options['body'] = JSON.stringify(body);
     }
 
-    options.headers = headers;
+    options.headers = isExternalUrl ? { 'Accept': 'application/json' } : headers;
 
-    const response = await this.fetchFunction.call(null, `${this.baseUrl}${path}`, options);
+    const fullUrl = isExternalUrl ? path : `${this.baseUrl}${path}`;
+
+    const response = await this.fetchFunction.call(null, fullUrl, options);
 
     if (response.ok) {
       return response.status === 204 ? true : response.json();

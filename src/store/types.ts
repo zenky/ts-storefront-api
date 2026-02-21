@@ -1,4 +1,5 @@
 import { Media } from "../media/types.ts";
+import { RemoteCatalog } from '../catalog/types.ts';
 import {
   AddressesProvider,
   Contact,
@@ -96,5 +97,6 @@ export interface Store {
   links: Contact[];
   phones: Phone[];
   cities: City[];
+  catalogs: RemoteCatalog[];
   settings: StoreSettings;
 }
