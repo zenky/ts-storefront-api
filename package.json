@@ -1,6 +1,6 @@
 {
   "name": "@zenky/storefront-api",
-  "version": "0.0.49",
+  "version": "0.0.50",
   "description": "Zenky Storefront API SDK",
   "author": "Timur Zurbaev <hello@zurbaev.ru>",
   "license": "MIT",
@@ -22,13 +22,15 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "types": "dts-bundle-generator --out-file ./dist/index.d.ts ./src/index.ts"
+    "types": "dts-bundle-generator --out-file ./dist/index.d.ts ./src/index.ts",
+    "docs:build": "node scripts/generate-docs-html.mjs"
   },
   "devDependencies": {
     "@types/node": "^18.8.0",
     "@types/postmate": "^1.5.3",
     "cross-fetch": "^3.1.6",
     "dts-bundle-generator": "^8.0.1",
+    "marked": "^17.0.3",
     "typescript": "^5.0.2",
     "vite": "^4.3.9",
     "vite-plugin-dts": "^2.3.0"

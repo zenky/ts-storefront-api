@@ -1,6 +1,6 @@
 import { AbstractResource } from "../client/resource.ts";
 import { InclusionRequest, PaginatedResponse } from "../client/types.ts";
-import { ArticleCategory, ListArticlesRequest } from "./types.ts";
+import { Article, ArticleCategory, ListArticlesRequest } from "./types.ts";
 
 export class ArticlesResource extends AbstractResource {
   async getArticleCategories(storeId: string): Promise<PaginatedResponse<ArticleCategory>> {
@@ -15,15 +15,15 @@ export class ArticlesResource extends AbstractResource {
     return this.getResponse<ArticleCategory>(await this.client.request('GET', url));
   }
 
-  async getArticles(storeId: string, request?: ListArticlesRequest): Promise<PaginatedResponse<ArticleCategory>> {
+  async getArticles(storeId: string, request?: ListArticlesRequest): Promise<PaginatedResponse<Article>> {
     const url = this.getStoreUrl(storeId, '/articles', request);
 
-    return this.getPaginatedResponse<ArticleCategory>(await this.client.request('GET', url));
+    return this.getPaginatedResponse<Article>(await this.client.request('GET', url));
   }
 
-  async getArticle(storeId: string, articleId: string, request?: InclusionRequest): Promise<ArticleCategory> {
+  async getArticle(storeId: string, articleId: string, request?: InclusionRequest): Promise<Article> {
     const url = this.getStoreUrl(storeId, `/articles/${articleId}`, request);
 
-    return this.getResponse<ArticleCategory>(await this.client.request('GET', url));
+    return this.getResponse<Article>(await this.client.request('GET', url));
   }
 }
