@@ -39,6 +39,7 @@ export interface City {
   name: string | null;
   timezone: string;
   coordinates: GeoLocation | null;
+  schedule: Schedule | null;
   stocks?: Stock[];
   delivery_zones?: DeliveryZone[];
   phones?: Phone[];
@@ -57,6 +58,10 @@ export interface StoreSettings {
     checkout_ui: {
       enabled: boolean;
       message: string | null;
+      closed_message: string | null;
+      legal: {
+        accept_label: string | null;
+      };
     };
   };
   products: {
