@@ -1,8 +1,11 @@
+import { Media } from '../media/types.ts';
+
 export interface Modifier {
   id: string;
   sku: string | null;
   name: string | null;
   price: number | null;
+  cover?: Media | null;
 }
 
 export interface BasicModifiersGroup {
