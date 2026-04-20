@@ -190,6 +190,69 @@ zenky.store.getStoreByBundleId(bundleId: string): Promise<Store>
 
 Returns store data for a mobile app bundle identifier.
 
+### Legal
+
+The store settings expose the list of available legal documents via
+`store.settings.legal.documents.available` (values of `AvailableLegalDocumentType`).
+The `loyalty_rules` document is not listed there — it is available whenever
+`store.settings.loyalty.enabled` is `true`.
+
+#### `getLegalProfile`
+
+```ts
+zenky.store.getLegalProfile(storeId: string): Promise<LegalProfile>
+```
+
+Returns the store's legal profile (organization name, legal and postal addresses, and additional fields).
+
+#### `getPrivacyPolicy`
+
+```ts
+zenky.store.getPrivacyPolicy(storeId: string): Promise<LegalDocument>
+```
+
+Returns the store's privacy policy document (`privacy_policy`).
+
+#### `getPersonalDataPolicy`
+
+```ts
+zenky.store.getPersonalDataPolicy(storeId: string): Promise<LegalDocument>
+```
+
+Returns the store's personal data processing policy document (`personal_data`).
+
+#### `getEula`
+
+```ts
+zenky.store.getEula(storeId: string): Promise<LegalDocument>
+```
+
+Returns the store's end-user license agreement (`eula`).
+
+#### `getTerms`
+
+```ts
+zenky.store.getTerms(storeId: string): Promise<LegalDocument>
+```
+
+Returns the store's public offer (`terms`).
+
+#### `getPersonalDataAgreement`
+
+```ts
+zenky.store.getPersonalDataAgreement(storeId: string): Promise<LegalDocument>
+```
+
+Returns the store's personal data processing agreement (`personal_data_agreement`).
+
+#### `getLoyaltyRules`
+
+```ts
+zenky.store.getLoyaltyRules(storeId: string): Promise<LegalDocument>
+```
+
+Returns the store's loyalty program rules document (`loyalty_rules`). Available only when the loyalty program is enabled.
+
 ### Authentication
 
 #### `checkPhone`

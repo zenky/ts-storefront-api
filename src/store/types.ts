@@ -89,6 +89,11 @@ export interface StoreSettings {
       port: number;
     };
   } | null;
+  legal: {
+    documents: {
+      available: AvailableLegalDocumentType[];
+    };
+  };
 }
 
 export interface Store {
@@ -105,3 +110,30 @@ export interface Store {
   catalogs: RemoteCatalog[];
   settings: StoreSettings;
 }
+
+export interface LegalProfileField {
+  field: string;
+  value: string;
+}
+
+export interface LegalProfile {
+  name: string;
+  legal_address: string;
+  postal_address: string;
+  fields: LegalProfileField[];
+}
+
+export interface LegalDocument {
+  content: string;
+}
+
+export enum LegalDocumentType {
+  PrivacyPolicy = 'privacy_policy',
+  PersonalData = 'personal_data',
+  Eula = 'eula',
+  Terms = 'terms',
+  PersonalDataAgreement = 'personal_data_agreement',
+  LoyaltyRules = 'loyalty_rules',
+}
+
+export type AvailableLegalDocumentType = Exclude<LegalDocumentType, LegalDocumentType.LoyaltyRules>;
