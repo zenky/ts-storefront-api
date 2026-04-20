@@ -125,3 +125,23 @@ export interface ResolverBonusesBalance {
   balance: number | null;
   resolved_by: string;
 }
+
+export interface PushCampaign {
+  id: string;
+  campaign_id: string;
+  title: string;
+  body: string;
+  sent_at: string | null;
+  delivered_at: string | null;
+  read_at: string | null;
+  created_at: string;
+}
+
+export interface PushCampaignsCounters {
+  total_count: number;
+  unread_count: number;
+}
+
+export interface TrackPushCampaignsRequest {
+  campaign_id?: string | null;
+}

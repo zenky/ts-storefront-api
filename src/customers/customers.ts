@@ -5,7 +5,9 @@ import { BonusesTransaction, ListCustomerBonusesTransactionsRequest } from "../l
 import {
   Customer, CustomerPaymentMethod,
   CustomerSettings, DeliveryAddressRequest,
+  PushCampaign, PushCampaignsCounters,
   RemoveCustomerProfileRequest, ResolverBonusesBalance,
+  TrackPushCampaignsRequest,
   UpdateCustomerProfileRequest,
   UpdateCustomerSettingsRequest,
 } from "./types.ts";
@@ -99,6 +101,26 @@ export class CustomersResource extends AbstractResource {
     const url = this.getStoreUrl(storeId, '/me/logout');
 
     await this.client.request('POST', url, null, apiToken);
+
+    return true;
+  }
+
+  async getPushCampaigns(storeId: string, request?: PaginationRequest, apiToken?: string): Promise<PaginatedResponse<PushCampaign>> {
+    const url = this.getStoreUrl(storeId, '/me/campaigns', request);
+
+    return this.getPaginatedResponse<PushCampaign>(await this.client.request('GET', url, null, apiToken));
+  }
+
+  async getPushCampaignsCounters(storeId: string, apiToken?: string): Promise<PushCampaignsCounters> {
+    const url = this.getStoreUrl(storeId, '/me/campaigns/count');
+
+    return this.getResponse<PushCampaignsCounters>(await this.client.request('GET', url, null, apiToken));
+  }
+
+  async trackPushCampaigns(storeId: string, request?: TrackPushCampaignsRequest, apiToken?: string): Promise<boolean> {
+    const url = this.getStoreUrl(storeId, '/me/campaigns/track');
+
+    await this.client.request('POST', url, request ?? null, apiToken);
 
     return true;
   }

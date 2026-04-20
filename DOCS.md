@@ -491,6 +491,44 @@ zenky.customer.getBonusesBalance(storeId: string, apiToken?: string): Promise<Re
 
 Returns the current loyalty bonus balance.
 
+### Customer Push Campaigns
+
+#### `getPushCampaigns`
+
+```ts
+zenky.customer.getPushCampaigns(
+  storeId: string,
+  request?: PaginationRequest,
+  apiToken?: string,
+): Promise<PaginatedResponse<PushCampaign>>
+```
+
+Returns push campaign messages delivered to the authenticated customer (paginated).
+
+#### `getPushCampaignsCounters`
+
+```ts
+zenky.customer.getPushCampaignsCounters(
+  storeId: string,
+  apiToken?: string,
+): Promise<PushCampaignsCounters>
+```
+
+Returns total and unread push campaign message counters.
+
+#### `trackPushCampaigns`
+
+```ts
+zenky.customer.trackPushCampaigns(
+  storeId: string,
+  request?: TrackPushCampaignsRequest,
+  apiToken?: string,
+): Promise<boolean>
+```
+
+Marks push campaign messages as read. Pass `campaign_id` to mark a specific message;
+omit `request` (or pass it without `campaign_id`) to mark all messages as read.
+
 ### Customer Session
 
 #### `revokeToken`
