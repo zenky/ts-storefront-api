@@ -52,6 +52,7 @@ export enum PaymentMethod {
   YooKassa = 'yookassa',
   CardToken = 'card_token',
   Bonuses = 'bonuses',
+  Alfa = 'alfa',
 }
 
 export enum OrderPaymentTransactionStatus {

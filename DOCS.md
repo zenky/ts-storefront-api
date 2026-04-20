@@ -616,6 +616,22 @@ Orders API has two auth models:
 
 When the `credentials` argument is provided as a plain string, that string is used as the `orderId`.
 
+#### `PaymentMethod`
+
+Identifiers of supported order payment methods. Used in `OrderPaymentMethod.id` and `OrderPaymentMethodRequest.method`.
+
+```ts
+enum PaymentMethod {
+  Cash = 'cash',
+  CreditCard = 'credit-card',
+  CloudPayments = 'cloudpayments',
+  YooKassa = 'yookassa',
+  CardToken = 'card_token',
+  Bonuses = 'bonuses',
+  Alfa = 'alfa',
+}
+```
+
 ### Order List and Cart Management
 
 #### `getOrders`
