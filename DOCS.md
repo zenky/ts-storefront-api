@@ -889,6 +889,19 @@ zenky.orders.getOnlinePaymentRedirect(
 
 Returns a redirect URL for an online payment transaction (if available).
 
+#### `retryOnlinePayment`
+
+```ts
+zenky.orders.retryOnlinePayment(
+  storeId: string,
+  credentials: OrderCredentials,
+  request?: OnlinePaymentRedirectRequest,
+): Promise<OnlinePaymentRedirect | null>
+```
+
+Retries an online payment for the order and returns a fresh redirect URL (if available).
+Used for providers that support retrying a failed payment without creating a new transaction (for example, Альфа-Банк).
+
 ### Totals and Loyalty Calculations
 
 #### `getOrderBonusesPreview`

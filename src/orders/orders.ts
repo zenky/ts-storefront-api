@@ -320,4 +320,16 @@ export class OrdersResource extends AbstractResource {
       await this.client.request('POST', url, request, this.getApiToken(credentials)),
     );
   }
+
+  async retryOnlinePayment(
+    storeId: string,
+    credentials: OrderCredentials,
+    request?: OnlinePaymentRedirectRequest,
+  ): Promise<OnlinePaymentRedirect | null> {
+    const url = this.getOrderUrl(storeId, credentials, `/checkout/payments/retry`);
+
+    return this.getResponse<OnlinePaymentRedirect | null>(
+      await this.client.request('POST', url, request, this.getApiToken(credentials)),
+    );
+  }
 }
