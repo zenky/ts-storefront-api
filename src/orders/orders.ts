@@ -20,6 +20,7 @@ import {
   OrderPromotionReward,
   OrderSettings,
   SetOrderCustomerRequest,
+  SetOrderDeliveryIntervalRequest,
   SetOrderDeliveryRequest,
   SetOrderPaymentsRequest,
   SetOrderPromocodeRequest,
@@ -135,6 +136,24 @@ export class OrdersResource extends AbstractResource {
 
     return this.getResponse<Order>(
       await this.client.request('POST', url, request, this.getApiToken(credentials)),
+    );
+  }
+
+  async setOrderDeliveryInterval(
+    storeId: string,
+    credentials: OrderCredentials,
+    request: SetOrderDeliveryIntervalRequest,
+  ): Promise<Order> {
+    const url = this.getOrderUrl(storeId, credentials, '/checkout/delivery/interval');
+    const body = {
+      delivery_interval: {
+        date: request.date,
+        id: request.interval_id,
+      },
+    };
+
+    return this.getResponse<Order>(
+      await this.client.request('POST', url, body, this.getApiToken(credentials)),
     );
   }
 

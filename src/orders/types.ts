@@ -202,6 +202,7 @@ export interface Order {
   customer?: Customer | null;
   delivery_address?: DeliveryAddress | null;
   delivery_zone?: DeliveryZone;
+  delivery_interval?: OrderDeliveryInterval | null;
   statuses?: OrderStatus[];
   progress?: OrderStatusProgress[];
   payments?: OrderPaymentTransaction[];
@@ -237,6 +238,7 @@ export enum OrderOptionKind {
   PersonsCount = 'persons_count',
   DeliveryTime = 'delivery_time',
   DeliveryIntervals = 'delivery_intervals',
+  Promocode = 'promocode',
 }
 
 export interface DeliveryInterval {
@@ -421,4 +423,19 @@ export interface OrderPromocode {
 
 export interface OnlinePaymentRedirectRequest {
   current_url?: string;
+}
+
+export interface SetOrderDeliveryIntervalRequest {
+  date: string;
+  interval_id: string;
+}
+
+export interface OrderDeliveryInterval {
+  id: string;
+  date: {
+    iso: string;
+    date: string;
+  };
+  start_time: string;
+  end_time: string;
 }

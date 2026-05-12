@@ -792,6 +792,19 @@ zenky.orders.setOrderDeliveryMethod(
 
 Sets delivery mode (delivery, pickup, on-premise) and delivery details.
 
+#### `setOrderDeliveryInterval`
+
+```ts
+zenky.orders.setOrderDeliveryInterval(
+  storeId: string,
+  credentials: OrderCredentials,
+  request: SetOrderDeliveryIntervalRequest,
+): Promise<Order>
+```
+
+Binds a delivery interval to the order without touching the delivery address, stock, or method.
+Returns the updated order. The bound interval can be inspected via `order.delivery_interval` (use `getOrder` with `with: 'delivery_interval'` to load the field).
+
 ### Checkout Preparation: Payments
 
 #### `setOrderPayments`
