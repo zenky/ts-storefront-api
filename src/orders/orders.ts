@@ -157,6 +157,17 @@ export class OrdersResource extends AbstractResource {
     );
   }
 
+  async resetOrderDeliveryInterval(
+    storeId: string,
+    credentials: OrderCredentials,
+  ): Promise<boolean> {
+    const url = this.getOrderUrl(storeId, credentials, '/checkout/delivery/interval');
+
+    await this.client.request('DELETE', url, null, this.getApiToken(credentials));
+
+    return true;
+  }
+
   async setOrderPayments(
     storeId: string,
     credentials: OrderCredentials,

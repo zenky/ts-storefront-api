@@ -805,6 +805,17 @@ zenky.orders.setOrderDeliveryInterval(
 Binds a delivery interval to the order without touching the delivery address, stock, or method.
 Returns the updated order. The bound interval can be inspected via `order.delivery_interval` (use `getOrder` with `with: 'delivery_interval'` to load the field).
 
+#### `resetOrderDeliveryInterval`
+
+```ts
+zenky.orders.resetOrderDeliveryInterval(
+  storeId: string,
+  credentials: OrderCredentials,
+): Promise<boolean>
+```
+
+Removes the previously bound delivery interval from the order.
+
 ### Checkout Preparation: Payments
 
 #### `setOrderPayments`
