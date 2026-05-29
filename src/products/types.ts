@@ -68,6 +68,13 @@ export interface ProductVariantOption {
   value: ProductVariantOptionValue;
 }
 
+export interface NutritionFacts {
+  calories: number | null;
+  proteins: number | null;
+  fats: number | null;
+  carbohydrates: number | null;
+}
+
 export interface ProductVariant {
   id: string;
   sku: string | null;
@@ -76,6 +83,7 @@ export interface ProductVariant {
   price: number;
   original_price: number | null;
   discount: Discount | null;
+  nutrition_facts: NutritionFacts | null;
   default_modifiers?: {
     modifiers: {
       modifier_id: string;
@@ -98,6 +106,7 @@ export interface Product {
   description: string | null;
   unit_type: UnitType;
   weight: number | null;
+  nutrition_facts: NutritionFacts | null;
   quantity_step: number | null;
   is_promotion_reward: boolean;
   categories: Category[];
