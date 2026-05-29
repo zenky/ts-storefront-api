@@ -16,9 +16,15 @@ export class ZenkyErrorBuilder {
 
     switch (response.status) {
       case 401:
-        return new ZenkyError(json?.message ?? 'Unauthenticated.', null);
+        return new ZenkyError(
+          json?.error?.message ?? json?.message ?? 'Unauthenticated.',
+          json?.error ?? null,
+        );
       default:
-        return new ZenkyError(json?.message, json?.error || null);
+        return new ZenkyError(
+          json?.error?.message ?? json?.message,
+          json?.error ?? null,
+        );
     }
   }
 }
