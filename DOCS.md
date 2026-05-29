@@ -816,6 +816,30 @@ zenky.orders.resetOrderDeliveryInterval(
 
 Removes the previously bound delivery interval from the order.
 
+#### `setOrderDeliveryTime`
+
+```ts
+zenky.orders.setOrderDeliveryTime(
+  storeId: string,
+  credentials: OrderCredentials,
+  request: SetOrderDeliveryTimeRequest,
+): Promise<Order>
+```
+
+Sets a deferred delivery time on the order, independently of the delivery method.
+`deliver_at` is a `YYYY-MM-DD HH:MM` string in the city timezone (for example, `"2021-07-20 19:00"`). Returns the updated order.
+
+#### `resetOrderDeliveryTime`
+
+```ts
+zenky.orders.resetOrderDeliveryTime(
+  storeId: string,
+  credentials: OrderCredentials,
+): Promise<boolean>
+```
+
+Removes the previously set delivery time from the order.
+
 ### Checkout Preparation: Payments
 
 #### `setOrderPayments`

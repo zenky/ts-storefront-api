@@ -430,6 +430,10 @@ export interface SetOrderDeliveryIntervalRequest {
   interval_id: string;
 }
 
+export interface SetOrderDeliveryTimeRequest {
+  deliver_at: string;
+}
+
 export interface OrderDeliveryInterval {
   id: string;
   date: {
