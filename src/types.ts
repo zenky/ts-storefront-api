@@ -28,6 +28,8 @@ export enum ContactType {
   Twitter = 'twitter',
   Ok = 'ok',
   Tiktok = 'tiktok',
+  Telegram = 'telegram',
+  Max = 'max',
 }
 
 export interface Contact {
