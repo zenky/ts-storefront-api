@@ -10,6 +10,8 @@ export * from './client/types.ts';
 export * from './client/zenky.ts';
 export * from './collections/types.ts';
 export * from './collections/collections.ts';
+export * from './creatives/types.ts';
+export * from './creatives/creatives.ts';
 export * from './customers/types.ts';
 export * from './features/types.ts';
 export * from './feedback/types.ts';

@@ -84,6 +84,7 @@ zenky.offers
 zenky.articles
 zenky.feedback
 zenky.loyalty
+zenky.creatives
 ```
 
 Use these exact property names (for example, `zenky.store`, not `zenky.stores`).
@@ -1124,6 +1125,30 @@ zenky.loyalty.getBonusesLevels(storeId: string): Promise<BonusesLevel[]>
 ```
 
 Returns available loyalty bonus levels for the store.
+
+### Creatives
+
+Banners and stories. Returned in the order configured in the admin panel, without pagination.
+The `sales_channel_id` query parameter is required — the API returns an empty list if it is omitted.
+Pass `city_id` to additionally filter creatives bound to a specific city (creatives without a city binding are always returned).
+
+#### `getCreatives`
+
+```ts
+zenky.creatives.getCreatives(storeId: string, request: CreativesRequest): Promise<Creative[]>
+```
+
+Returns all creatives (horizontal banners, vertical banners and stories) configured for the given sales channel.
+
+Each `Creative` exposes:
+- `items[]` — main media files; for `horizontal_banner` contains `desktop` + `mobile_web` slots, for `vertical_banner` and `story` contains a single `default` slot (story cover).
+- `action` — click action for `horizontal_banner` and `vertical_banner`; `null` for `story` (story actions are per-slide).
+- `slides[]` — story slides (up to 10), present only for `type === 'story'`.
+
+Click actions (`CreativeAction`) come in three kinds:
+- `open_link` — navigate to a product / category / products collection / offer / article / custom URL. `link.target` shape depends on `link.type`: for `product` / `category` / `offer` / `article` it is `{ id, slug, short_id }`; for `products_collection` it is `{ id }`; for `custom_url` it is a plain URL string.
+- `add_product_to_cart` — slides only; carries `product` (`{ id, slug, short_id }`) and `product_variant` (`{ id }`).
+- `apply_promocode` — slides only; carries `promocode: string`.
 
 ## Example IDs Used in This Document
 
