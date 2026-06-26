@@ -1147,7 +1147,7 @@ Each `Creative` exposes:
 
 Click actions (`CreativeAction`) come in three kinds:
 - `open_link` — navigate to a product / category / products collection / offer / article / custom URL. `link.target` shape depends on `link.type`: for `product` / `category` / `offer` / `article` it is `{ id, slug, short_id }`; for `products_collection` it is `{ id }`; for `custom_url` it is a plain URL string.
-- `add_product_to_cart` — slides only; carries `product` (`{ id, slug, short_id }`) and `product_variant` (`{ id }`).
+- `add_product_to_cart` — slides only; carries `product` (`{ id, slug, short_id, name }`) and `product_variant` (`{ id, price, original_price }`).
 - `apply_promocode` — slides only; carries `promocode: string`.
 
 ## Example IDs Used in This Document

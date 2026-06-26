@@ -66,6 +66,16 @@ export interface CreativeResourceId {
   id: string;
 }
 
+export interface CreativeCartActionProduct extends CreativeResource {
+  name: string;
+}
+
+export interface CreativeCartActionProductVariant {
+  id: string;
+  price: number;
+  original_price: number | null;
+}
+
 export type CreativeLink =
   | { type: CreativeLinkType.Product; target: CreativeResource }
   | { type: CreativeLinkType.Category; target: CreativeResource }
@@ -76,7 +86,11 @@ export type CreativeLink =
 
 export type CreativeAction =
   | { type: CreativeActionType.OpenLink; link: CreativeLink }
-  | { type: CreativeActionType.AddProductToCart; product: CreativeResource; product_variant: CreativeResourceId }
+  | {
+    type: CreativeActionType.AddProductToCart;
+    product: CreativeCartActionProduct;
+    product_variant: CreativeCartActionProductVariant;
+  }
   | { type: CreativeActionType.ApplyPromocode; promocode: string };
 
 export interface CreativeStorySlide {
