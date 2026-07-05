@@ -318,6 +318,25 @@ zenky.auth.resetPassword(storeId: string, request: ResetPasswordRequest): Promis
 
 Resets password with a confirmation code and returns a Bearer token.
 
+#### `vkInit`
+
+```ts
+zenky.auth.vkInit(storeId: string, request: VkAuthInitRequest): Promise<VkAuthInitResult>
+```
+
+Starts VK login. Returns `{ store_id, auth_url }`; redirect the customer to `auth_url` as-is.
+The `store_id` is sent in the request body (not in the URL path). Optional `token_type` defaults to `'storefront'`; `scopes` (comma-separated) applies only to `token_type: 'legacy'`.
+For WebView, set `redirect_url` to `https://storefront.zenky.io/v1/auth/vk/blank` and track navigation to that URL.
+Enabled for the store when `store.settings.authentication.vk.enabled` is `true`.
+
+#### `vkExchange`
+
+```ts
+zenky.auth.vkExchange(request: VkAuthExchangeRequest): Promise<VkAuthExchangeResult>
+```
+
+Exchanges the `state` and `code` returned by VK for a customer Bearer token. The pair is single-use and expires after 15 minutes. `storeId` is not required — the `state`/`code` pair is self-sufficient.
+
 #### `useAuthenticationModal`
 
 ```ts
@@ -1185,7 +1204,7 @@ In the source repository, payload and response types are organized in these file
 - `store/types.ts`
 - `addresses/types.ts`
 
-Root export note: `src/index.ts` re-exports most public modules, but authentication files are not currently re-exported from the package root. In practice, you can still use authentication methods through `zenky.auth`.
+Root export note: `src/index.ts` re-exports all public modules, including `authentication/*`. Authentication types and enums (`TokenType`, `LoginRequest`, `ConfirmationMethod`, VK types etc.) can be imported directly from the package root.
 
 ## Appendix: Common Interfaces
 

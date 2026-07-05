@@ -66,3 +66,28 @@ export interface AuthenticationModalProvider {
   initAuthenticationModal: () => Promise<boolean>;
   destroyAuthenticationModal: () => void;
 }
+
+export enum TokenType {
+  Storefront = 'storefront',
+  Legacy = 'legacy',
+}
+
+export interface VkAuthInitRequest {
+  redirect_url: string;
+  token_type?: TokenType;
+  scopes?: string;
+}
+
+export interface VkAuthInitResult {
+  store_id: string;
+  auth_url: string;
+}
+
+export interface VkAuthExchangeRequest {
+  state: string;
+  code: string;
+}
+
+export interface VkAuthExchangeResult {
+  token: string;
+}

@@ -94,6 +94,11 @@ export interface StoreSettings {
       available: AvailableLegalDocumentType[];
     };
   };
+  authentication: {
+    vk: {
+      enabled: boolean;
+    };
+  };
 }
 
 export interface Store {

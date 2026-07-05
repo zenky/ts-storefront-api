@@ -13,6 +13,10 @@ import {
   RegistrationRequest,
   ResendAuthConfirmationRequest,
   ResetPasswordRequest,
+  VkAuthExchangeRequest,
+  VkAuthExchangeResult,
+  VkAuthInitRequest,
+  VkAuthInitResult,
 } from "./types.ts";
 
 export class AuthenticationResource extends AbstractResource {
@@ -56,6 +60,16 @@ export class AuthenticationResource extends AbstractResource {
     const url = this.getStoreUrl(storeId, '/auth/password/reset');
 
     return this.getResponse<AuthResult>(await this.client.request('POST', url, request));
+  }
+
+  async vkInit(storeId: string, request: VkAuthInitRequest): Promise<VkAuthInitResult> {
+    const body = { store_id: storeId, ...request };
+
+    return this.getResponse<VkAuthInitResult>(await this.client.request('POST', '/auth/vk', body));
+  }
+
+  async vkExchange(request: VkAuthExchangeRequest): Promise<VkAuthExchangeResult> {
+    return this.getResponse<VkAuthExchangeResult>(await this.client.request('POST', '/auth/vk/exchange', request));
   }
 
   useAuthenticationModal(
