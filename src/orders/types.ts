@@ -380,6 +380,8 @@ export interface OrderCheckoutTotal {
 export interface OrderCheckoutRequest extends RecaptchaRequest {
   notes?: string;
   persons_count?: string | number;
+  session_id?: string;
+  anonymous_id?: string;
 }
 
 export interface OrderCheckoutResult {

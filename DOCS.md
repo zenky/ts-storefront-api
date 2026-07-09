@@ -85,6 +85,7 @@ zenky.articles
 zenky.feedback
 zenky.loyalty
 zenky.creatives
+zenky.events
 ```
 
 Use these exact property names (for example, `zenky.store`, not `zenky.stores`).
@@ -1168,6 +1169,28 @@ Click actions (`CreativeAction`) come in three kinds:
 - `open_link` — navigate to a product / category / products collection / offer / article / custom URL. `link.target` shape depends on `link.type`: for `product` / `category` / `offer` / `article` it is `{ id, slug, short_id }`; for `products_collection` it is `{ id }`; for `custom_url` it is a plain URL string.
 - `add_product_to_cart` — slides only; carries `product` (`{ id, slug, short_id, name }`) and `product_variant` (`{ id, price, original_price }`).
 - `apply_promocode` — slides only; carries `promocode: string`.
+
+### Commerce Events
+
+Storefront commerce analytics events (page views, product views, cart changes, checkout starts, banner clicks). Send events in batches — the API accepts a `{ events: CommerceEvent[] }` payload and reports per-event acceptance.
+
+#### `create`
+
+```ts
+zenky.events.create(
+  storeId: string,
+  request: CommerceEventsRequest,
+  apiToken?: string,
+): Promise<CommerceEventsResult>
+```
+
+Publishes a batch of commerce events. Pass `apiToken` when the customer is authenticated; for guests, send `anonymous_id` on each event and omit the token.
+
+Each `CommerceEvent` requires `event_id`, `event_name` (see `CommerceEventName`), `schema_version: 1`, `occured_at` (ISO-8601 UTC) and `source` (`'web'` or `'mobile'`). `order_id` is required for `product_added_to_cart`, `product_removed_from_cart`, `cart_viewed` and `checkout_started`. `context` and `properties` are free-form key/value bags.
+
+The response includes per-event outcome (`accepted` / `duplicate` / `rejected` / `failed`) via `items[]`, plus aggregate counts.
+
+To attribute guest activity to a submitted order, forward the same `session_id` / `anonymous_id` to `checkoutOrder` via `OrderCheckoutRequest`.
 
 ## Example IDs Used in This Document
 

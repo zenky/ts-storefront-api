@@ -15,6 +15,8 @@ export * from './collections/collections.ts';
 export * from './creatives/types.ts';
 export * from './creatives/creatives.ts';
 export * from './customers/types.ts';
+export * from './events/types.ts';
+export * from './events/events.ts';
 export * from './features/types.ts';
 export * from './feedback/types.ts';
 export * from './feedback/feedback.ts';
