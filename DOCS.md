@@ -1186,7 +1186,7 @@ zenky.events.create(
 
 Publishes a batch of commerce events. Pass `apiToken` when the customer is authenticated; for guests, send `anonymous_id` on each event and omit the token.
 
-Each `CommerceEvent` requires `event_id`, `event_name` (see `CommerceEventName`), `schema_version: 1`, `occured_at` (ISO-8601 UTC) and `source` (`'web'` or `'mobile'`). `order_id` is required for `product_added_to_cart`, `product_removed_from_cart`, `cart_viewed` and `checkout_started`. `context` and `properties` are free-form key/value bags.
+Each `CommerceEvent` requires `event_id`, `event_name` (see `CommerceEventName`), `schema_version: 1`, `occurred_at` (ISO-8601 UTC) and `source` (`'web'` or `'mobile'`). `order_id` is required for `product_added_to_cart`, `product_removed_from_cart`, `cart_viewed` and `checkout_started`. `context` and `properties` are free-form key/value bags.
 
 The response includes per-event outcome (`accepted` / `duplicate` / `rejected` / `failed`) via `items[]`, plus aggregate counts.
 

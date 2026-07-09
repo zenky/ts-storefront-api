@@ -46,7 +46,7 @@ export interface CommerceEvent {
   event_id: string;
   event_name: CommerceEventName;
   schema_version: 1;
-  occured_at: string;
+  occurred_at: string;
   source: CommerceEventSource;
   anonymous_id?: string;
   session_id?: string;
