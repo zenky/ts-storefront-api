@@ -75,6 +75,19 @@ export interface NutritionFacts {
   carbohydrates: number | null;
 }
 
+export enum ProductCustomFieldType {
+  Text = 'text',
+  Multiline = 'multiline',
+  Image = 'image',
+}
+
+export interface ProductCustomField {
+  id: string;
+  name: string | null;
+  type: ProductCustomFieldType;
+  value: string;
+}
+
 export interface ProductVariant {
   id: string;
   sku: string | null;
@@ -114,6 +127,7 @@ export interface Product {
   variants?: ProductVariant[];
   features?: Feature[];
   features_groups: FeaturesGroup[];
+  custom_fields?: ProductCustomField[];
   modifiers?: ProductModifier[];
   modifiers_groups?: ProductModifiersGroup[];
   seo?: Seo;
