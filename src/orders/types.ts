@@ -1,6 +1,6 @@
 import { Discount, DiscountType, Phone, PhoneRequest, RecaptchaRequest } from "../types.ts";
 import { City, DeliveryZone, Stock } from "../store/types.ts";
-import { Product, ProductModifiersRequest, ProductVariant } from "../products/types.ts";
+import { EvaluatedRestriction, Product, ProductModifiersRequest, ProductVariant } from "../products/types.ts";
 import { BasicModifiersGroup, Modifier } from "../modifiers/types.ts";
 import { Customer, Gender } from "../customers/types.ts";
 import { ListRequest } from "../client/types.ts";
@@ -175,6 +175,7 @@ export interface OrderProductVariant {
   product?: Product;
   variant?: ProductVariant;
   modifiers?: OrderProductVariantModifier[];
+  restrictions?: EvaluatedRestriction[];
 }
 
 export interface Order {
@@ -444,4 +445,8 @@ export interface OrderDeliveryInterval {
   };
   start_time: string;
   end_time: string;
+}
+
+export enum OrderErrorCode {
+  ProductsRestrictionBlocking = 'orders.products.restriction_blocking',
 }

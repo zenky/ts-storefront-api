@@ -75,6 +75,22 @@ export interface NutritionFacts {
   carbohydrates: number | null;
 }
 
+export type RestrictionType = 'schedule' | (string & {});
+
+export interface ProductRestriction {
+  id: RestrictionType;
+  message: string;
+}
+
+export interface EvaluatedRestriction extends ProductRestriction {
+  is_blocking: boolean;
+}
+
+export interface GetProductRestrictionsRequest {
+  order_id?: string;
+  order_token?: string;
+}
+
 export enum ProductCustomFieldType {
   Text = 'text',
   Multiline = 'multiline',
@@ -128,6 +144,7 @@ export interface Product {
   features?: Feature[];
   features_groups: FeaturesGroup[];
   custom_fields?: ProductCustomField[];
+  restrictions?: ProductRestriction[];
   modifiers?: ProductModifier[];
   modifiers_groups?: ProductModifiersGroup[];
   seo?: Seo;

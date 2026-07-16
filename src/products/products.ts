@@ -1,5 +1,7 @@
 import { AbstractResource } from "../client/resource.ts";
 import {
+  EvaluatedRestriction,
+  GetProductRestrictionsRequest,
   ListProductsRequest,
   Product,
   ProductVariantPriceCalculation,
@@ -30,5 +32,15 @@ export class ProductsResource extends AbstractResource {
     const url = this.getStoreUrl(storeId, `/products/${productId}/variants/${variantId}/price`);
 
     return this.getResponse(await this.client.request('POST', url, request));
+  }
+
+  async getProductRestrictions(
+    storeId: string,
+    productId: string,
+    request?: GetProductRestrictionsRequest,
+  ): Promise<EvaluatedRestriction[]> {
+    const url = this.getStoreUrl(storeId, `/products/${productId}/restrictions`, request);
+
+    return this.getResponse<EvaluatedRestriction[]>(await this.client.request('GET', url));
   }
 }
