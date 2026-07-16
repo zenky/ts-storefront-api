@@ -657,13 +657,12 @@ Calculates variant price using selected modifiers and location context.
 zenky.products.getProductRestrictions(
   storeId: string,
   productId: string,
-  request?: GetProductRestrictionsRequest,
 ): Promise<EvaluatedRestriction[]>
 ```
 
-Returns evaluated product restrictions (each with `is_blocking`) for the given order context. Pass the current `order_id` / `order_token` in the `request` — the `is_blocking` flag depends on the order's delivery time / interval and is recomputed per call.
+Returns product restrictions with the evaluated `is_blocking` flag for each entry. The endpoint takes no input parameters — the flag is computed on the backend.
 
-`Product.restrictions?: ProductRestriction[]` (returned from `getProducts` / `getProduct`) does not include `is_blocking` — use this method or read `order.variants[].restrictions` after a checkout submit to get the evaluated flag.
+`Product.restrictions?: ProductRestriction[]` (returned from `getProducts` / `getProduct`) carries the raw list without `is_blocking` — use this method or read `order.variants[].restrictions` (which arrives already evaluated) to know whether a restriction currently blocks ordering.
 
 When a checkout is rejected because of a blocking restriction, the API returns `ZenkyError` with `err.error_code === OrderErrorCode.ProductsRestrictionBlocking` (`'orders.products.restriction_blocking'`).
 

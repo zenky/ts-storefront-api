@@ -86,11 +86,6 @@ export interface EvaluatedRestriction extends ProductRestriction {
   is_blocking: boolean;
 }
 
-export interface GetProductRestrictionsRequest {
-  order_id?: string;
-  order_token?: string;
-}
-
 export enum ProductCustomFieldType {
   Text = 'text',
   Multiline = 'multiline',
