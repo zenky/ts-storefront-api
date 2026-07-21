@@ -1,12 +1,14 @@
 {
   "name": "@zenky/storefront-api",
-  "version": "0.0.68",
+  "version": "0.0.0-development",
   "description": "Zenky Storefront API SDK",
-  "author": "Timur Zurbaev <hello@zurbaev.ru>",
+  "author": "Zenky <tech@zenky.io>",
   "license": "MIT",
   "type": "module",
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE.md"
   ],
   "main": "./dist/zenky-storefront-api.umd.s",
   "module": "./dist/zenky-storefront-api.es.js",
@@ -37,5 +39,13 @@
   },
   "dependencies": {
     "postmate": "^1.5.2"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zenky/ts-storefront-api.git"
   }
 }

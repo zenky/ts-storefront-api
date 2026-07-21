@@ -1,0 +1,127 @@
+name: Publish npm package
+
+on:
+  release:
+    types:
+      - published
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: npm-publish-${{ github.event.release.tag_name }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out the released commit
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+          package-manager-cache: false
+
+      - name: Install an OIDC-capable npm CLI
+        run: npm install --global npm@11
+
+      - name: Resolve version from release tag
+        id: release
+        shell: bash
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          set -euo pipefail
+
+          # Accept either v0.4.7 or 0.4.7.
+          VERSION="${RELEASE_TAG#v}"
+
+          # Accept normal semantic versions and prerelease versions.
+          # Examples:
+          #   0.4.7
+          #   0.5.0-beta.1
+          #   1.0.0-rc.2
+          if [[ ! "$VERSION" =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$ ]]; then
+            echo "::error::Release tag must be vX.Y.Z or vX.Y.Z-prerelease.N"
+            exit 1
+          fi
+
+          if [[ "$VERSION" == *-* ]]; then
+            DIST_TAG="next"
+          else
+            DIST_TAG="latest"
+          fi
+
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "dist_tag=$DIST_TAG" >> "$GITHUB_OUTPUT"
+
+          echo "npm version: $VERSION"
+          echo "npm dist-tag: $DIST_TAG"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Set package version from release tag
+        env:
+          VERSION: ${{ steps.release.outputs.version }}
+        run: |
+          npm version "$VERSION" \
+            --no-git-tag-version \
+            --ignore-scripts
+
+      - name: Verify package metadata
+        shell: bash
+        env:
+          EXPECTED_VERSION: ${{ steps.release.outputs.version }}
+        run: |
+          set -euo pipefail
+
+          PACKAGE_NAME="$(node -p "require('./package.json').name")"
+          PACKAGE_VERSION="$(node -p "require('./package.json').version")"
+
+          if [[ "$PACKAGE_VERSION" != "$EXPECTED_VERSION" ]]; then
+            echo "::error::package.json version is $PACKAGE_VERSION, expected $EXPECTED_VERSION"
+            exit 1
+          fi
+
+          echo "Publishing ${PACKAGE_NAME}@${PACKAGE_VERSION}"
+
+      - name: Ensure version is not already published
+        shell: bash
+        env:
+          VERSION: ${{ steps.release.outputs.version }}
+        run: |
+          set -euo pipefail
+
+          PACKAGE_NAME="$(node -p "require('./package.json').name")"
+
+          if npm view "${PACKAGE_NAME}@${VERSION}" version --json >/dev/null 2>&1; then
+            echo "::error::${PACKAGE_NAME}@${VERSION} already exists on npm."
+            echo "::error::Create a release with a new version tag."
+            exit 1
+          fi
+
+      - name: Run tests
+        run: npm test --if-present
+
+      - name: Build package
+        run: chmod +x ./build.sh && ./build.sh
+
+      - name: Inspect package contents
+        run: npm pack --dry-run
+
+      - name: Publish package
+        env:
+          DIST_TAG: ${{ steps.release.outputs.dist_tag }}
+        run: npm publish --tag "$DIST_TAG"
