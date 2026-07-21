@@ -1,6 +1,7 @@
 import { AbstractResource } from "../client/resource.ts";
 import {
   EvaluatedRestriction,
+  GetProductRestrictionsRequest,
   ListProductsRequest,
   Product,
   ProductVariantPriceCalculation,
@@ -36,8 +37,9 @@ export class ProductsResource extends AbstractResource {
   async getProductRestrictions(
     storeId: string,
     productId: string,
+    request: GetProductRestrictionsRequest,
   ): Promise<EvaluatedRestriction[]> {
-    const url = this.getStoreUrl(storeId, `/products/${productId}/restrictions`);
+    const url = this.getStoreUrl(storeId, `/products/${productId}/restrictions`, request);
 
     return this.getResponse<EvaluatedRestriction[]>(await this.client.request('GET', url));
   }
