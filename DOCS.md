@@ -707,6 +707,17 @@ enum PaymentMethod {
 }
 ```
 
+#### `RecommendationsBlock`
+
+Identifies the recommendations block a product was added to the cart from. Used in `OrderProductVariantRequest.recommendations_block`.
+
+```ts
+enum RecommendationsBlock {
+  ProductCard = 'product_card',
+  Cart = 'cart',
+}
+```
+
 ### Order List and Cart Management
 
 #### `getOrders`
@@ -752,6 +763,8 @@ zenky.orders.addProductVariantToOrder(
 ```
 
 Adds a product variant to the order cart.
+
+Pass the optional `recommendations_block` (see `RecommendationsBlock`) when the variant is added from a recommendations block — `'product_card'` for the product card block, `'cart'` for the cart block. Omit it for regular add-to-cart actions. The field is only meaningful here; `removeProductVariantFromOrder` shares the same request type but ignores it.
 
 #### `removeProductVariantFromOrder`
 

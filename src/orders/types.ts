@@ -307,12 +307,18 @@ export interface CreateOrderRequest {
   city_id: string;
 }
 
+export enum RecommendationsBlock {
+  ProductCard = 'product_card',
+  Cart = 'cart',
+}
+
 export interface OrderProductVariantRequest {
   product_variant_id: string;
   quantity: number;
   promotion_id?: string;
   promotion_reward_id?: string;
   modifiers?: ProductModifiersRequest[];
+  recommendations_block?: RecommendationsBlock;
 }
 
 export interface SetOrderCustomerRequest {
