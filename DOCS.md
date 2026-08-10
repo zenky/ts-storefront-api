@@ -568,7 +568,8 @@ Revokes the current customer token (logs out).
 zenky.catalog.getRemoteCatalog(storeId: string, request?: ShowCatalogRequest): Promise<RemoteCatalog>
 ```
 
-Returns remote catalog metadata (including URL and hash).
+Returns remote catalog metadata (including URL and hash). `catalog_id` is `null` for
+automatic catalogs and filled for manual ones bound to a website.
 
 #### `getCatalogFromRemoteUrl`
 
@@ -577,6 +578,19 @@ zenky.catalog.getCatalogFromRemoteUrl(storeId: string, request?: ShowCatalogRequ
 ```
 
 Fetches catalog content from the remote catalog URL.
+
+A catalog item is either a category or a products collection, and carries the object
+matching its `type`:
+
+```ts
+if (item.type === 'products_collection') {
+  item.products_collection; // ProductsCollection
+} else {
+  item.category; // Category
+}
+```
+
+Collections appear only in manual catalogs — automatic catalogs contain categories only.
 
 ### Categories
 
