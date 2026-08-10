@@ -4,7 +4,7 @@ import { EvaluatedRestriction, Product, ProductModifiersRequest, ProductVariant 
 import { BasicModifiersGroup, Modifier } from "../modifiers/types.ts";
 import { Customer, Gender } from "../customers/types.ts";
 import { ListRequest } from "../client/types.ts";
-import { ConfirmationMethod } from "../authentication/types.ts";
+import { ConfirmationMethod, RequestedConfirmationMethod } from "../authentication/types.ts";
 import {
   DadataDeliveryAddressRequest,
   DeliveryAddress,
@@ -407,6 +407,15 @@ export interface OrderCheckoutResult {
 
 export interface ConfirmOrderRequest {
   code: string | number;
+}
+
+export interface ResendOrderConfirmationCodeRequest {
+  method?: RequestedConfirmationMethod | null;
+}
+
+export interface OrderConfirmationCodeResendResult {
+  success: boolean;
+  method: ConfirmationMethod | null;
 }
 
 export interface OrderConfirmationResult {

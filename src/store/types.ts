@@ -98,6 +98,15 @@ export interface StoreSettings {
     vk: {
       enabled: boolean;
     };
+    sms: {
+      enabled: boolean;
+    };
+    telegram: {
+      enabled: boolean;
+    };
+    whatsapp: {
+      enabled: boolean;
+    };
   };
 }
 

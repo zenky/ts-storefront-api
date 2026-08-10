@@ -4,7 +4,11 @@ import { Gender } from "../customers/types.ts";
 export enum ConfirmationMethod {
   Sms = 'sms',
   Call = 'call',
+  Telegram = 'telegram',
+  WhatsApp = 'whatsapp',
 }
+
+export type RequestedConfirmationMethod = Exclude<ConfirmationMethod, ConfirmationMethod.Call>;
 
 export interface AbstractRegistrationRequest {
   phone: PhoneRequest;
@@ -18,6 +22,7 @@ export interface AbstractRegistrationRequest {
 export interface RegistrationRequest extends AbstractRegistrationRequest, RecaptchaRequest {
   referrer_code?: string;
   referrer_id?: string;
+  method?: RequestedConfirmationMethod | null;
 }
 
 export interface ConfirmRegistrationRequest extends AbstractRegistrationRequest {
@@ -36,10 +41,12 @@ export interface AuthResult {
 
 export interface ResendAuthConfirmationRequest extends RecaptchaRequest {
   phone: PhoneRequest;
+  method?: RequestedConfirmationMethod | null;
 }
 
 export interface DispatchPasswordResetRequest extends RecaptchaRequest {
   phone: PhoneRequest;
+  method?: RequestedConfirmationMethod | null;
 }
 
 export interface ResetPasswordRequest {

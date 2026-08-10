@@ -19,6 +19,7 @@ import {
   OrderPromocode,
   OrderPromotionReward,
   OrderSettings,
+  ResendOrderConfirmationCodeRequest,
   SetOrderCustomerRequest,
   SetOrderDeliveryIntervalRequest,
   SetOrderDeliveryRequest,
@@ -294,13 +295,23 @@ export class OrdersResource extends AbstractResource {
     return true;
   }
 
+  /**
+   * Resends the order confirmation code.
+   *
+   * The `boolean` return is temporary: the API answers with
+   * `OrderConfirmationCodeResendResult`, and the discarded `method` is the only way
+   * to learn the channel when `request.method` was omitted and the store default
+   * applied. The return type changes to that object in the next major release, so
+   * do not annotate call sites as `boolean`.
+   */
   async resendOrderConfirmationCode(
     storeId: string,
     credentials: OrderCredentials,
+    request?: ResendOrderConfirmationCodeRequest,
   ): Promise<boolean> {
     const url = this.getOrderUrl(storeId, credentials, `/confirm/resend`);
 
-    await this.client.request('POST', url, undefined, this.getApiToken(credentials));
+    await this.client.request('POST', url, request, this.getApiToken(credentials));
 
     return true;
   }

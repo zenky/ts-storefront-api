@@ -257,6 +257,30 @@ Returns the store's loyalty program rules document (`loyalty_rules`). Available 
 
 ### Authentication
 
+#### `ConfirmationMethod`
+
+How a phone confirmation code is delivered. Returned in `AuthConfirmationStatus.method` and `OrderCheckoutResult.confirmation.method`; requested via the optional `method` in `RegistrationRequest`, `ResendAuthConfirmationRequest`, `DispatchPasswordResetRequest` and `ResendOrderConfirmationCodeRequest`.
+
+```ts
+enum ConfirmationMethod {
+  Sms = 'sms',
+  Call = 'call',
+  Telegram = 'telegram',
+  WhatsApp = 'whatsapp',
+}
+```
+
+`Call` is response-only: it reports that the code is the last four digits of the number an incoming call arrives from. It cannot be requested, so request fields use the narrowed alias instead:
+
+```ts
+type RequestedConfirmationMethod = Exclude<ConfirmationMethod, ConfirmationMethod.Call>;
+// 'sms' | 'telegram' | 'whatsapp'
+```
+
+Which channels a store accepts is exposed by `store.settings.authentication` — `sms`, `telegram` and `whatsapp` each carry an `enabled` flag (`vk` in the same object is social login, not a confirmation channel). Show a channel picker when two or more are enabled; with a single enabled channel, send it without asking. Requesting a channel the store does not support fails with `ZenkyError`, `err.http_code === 503` and `err.error_code === 'auth.otp_request.failed'`.
+
+Omit `method` to let the backend pick the store default. Read the `method` returned in the response to tell the customer where the code actually went — that is the only way to know the default the store picked.
+
 #### `checkPhone`
 
 ```ts
@@ -271,7 +295,7 @@ Checks whether a phone number is already registered and confirmed.
 zenky.auth.register(storeId: string, request: RegistrationRequest): Promise<AuthConfirmationStatus>
 ```
 
-Starts customer registration.
+Starts customer registration. Pass the optional `method` (see `ConfirmationMethod`) to choose how the confirmation code is delivered.
 
 #### `confirmRegistration`
 
@@ -279,7 +303,7 @@ Starts customer registration.
 zenky.auth.confirmRegistration(storeId: string, request: ConfirmRegistrationRequest): Promise<AuthResult>
 ```
 
-Finishes registration with a verification code and returns a Bearer token.
+Finishes registration with a verification code and returns a Bearer token. Takes no `method` — the code is verified regardless of how it was delivered.
 
 #### `resendRegistrationConfirmation`
 
@@ -290,7 +314,7 @@ zenky.auth.resendRegistrationConfirmation(
 ): Promise<AuthConfirmationStatus>
 ```
 
-Resends the registration confirmation code.
+Resends the registration confirmation code. Accepts the optional `method`, so a customer can retry over a different channel than the original request.
 
 #### `login`
 
@@ -309,7 +333,7 @@ zenky.auth.dispatchPasswordReset(
 ): Promise<AuthConfirmationStatus>
 ```
 
-Sends a password reset confirmation code.
+Sends a password reset confirmation code. Accepts the optional `method`; call it again with a different `method` to re-send the code over another channel.
 
 #### `resetPassword`
 
@@ -811,10 +835,16 @@ Cancels an order.
 #### `resendOrderConfirmationCode`
 
 ```ts
-zenky.orders.resendOrderConfirmationCode(storeId: string, credentials: OrderCredentials): Promise<boolean>
+zenky.orders.resendOrderConfirmationCode(
+  storeId: string,
+  credentials: OrderCredentials,
+  request?: ResendOrderConfirmationCodeRequest,
+): Promise<boolean>
 ```
 
-Resends the order confirmation code.
+Resends the order confirmation code. Accepts the optional `method` (see `ConfirmationMethod`), so a customer can retry over a different channel than the original checkout confirmation.
+
+The `boolean` return is temporary. The API answers with `OrderConfirmationCodeResendResult` (`{ success, method }`), and that `method` is the only way to learn the channel when `method` was omitted from the request and the store default applied. The return type changes to that object in the next major release — do not annotate call sites as `boolean`.
 
 #### `confirmOrder`
 
