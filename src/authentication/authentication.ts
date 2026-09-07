@@ -17,6 +17,10 @@ import {
   VkAuthExchangeResult,
   VkAuthInitRequest,
   VkAuthInitResult,
+  YandexAuthExchangeRequest,
+  YandexAuthExchangeResult,
+  YandexAuthInitRequest,
+  YandexAuthInitResult,
 } from "./types.ts";
 
 export class AuthenticationResource extends AbstractResource {
@@ -70,6 +74,16 @@ export class AuthenticationResource extends AbstractResource {
 
   async vkExchange(request: VkAuthExchangeRequest): Promise<VkAuthExchangeResult> {
     return this.getResponse<VkAuthExchangeResult>(await this.client.request('POST', '/auth/vk/exchange', request));
+  }
+
+  async yandexInit(storeId: string, request: YandexAuthInitRequest): Promise<YandexAuthInitResult> {
+    const body = { store_id: storeId, ...request };
+
+    return this.getResponse<YandexAuthInitResult>(await this.client.request('POST', '/auth/yandex', body));
+  }
+
+  async yandexExchange(request: YandexAuthExchangeRequest): Promise<YandexAuthExchangeResult> {
+    return this.getResponse<YandexAuthExchangeResult>(await this.client.request('POST', '/auth/yandex/exchange', request));
   }
 
   useAuthenticationModal(

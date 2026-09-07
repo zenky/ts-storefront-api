@@ -79,22 +79,32 @@ export enum TokenType {
   Legacy = 'legacy',
 }
 
-export interface VkAuthInitRequest {
+export interface ExternalAuthInitRequest {
   redirect_url: string;
   token_type?: TokenType;
   scopes?: string;
 }
 
-export interface VkAuthInitResult {
+export interface ExternalAuthInitResult {
   store_id: string;
   auth_url: string;
 }
 
-export interface VkAuthExchangeRequest {
+export interface ExternalAuthExchangeRequest {
   state: string;
   code: string;
 }
 
-export interface VkAuthExchangeResult {
+export interface ExternalAuthExchangeResult {
   token: string;
 }
+
+export type VkAuthInitRequest = ExternalAuthInitRequest;
+export type VkAuthInitResult = ExternalAuthInitResult;
+export type VkAuthExchangeRequest = ExternalAuthExchangeRequest;
+export type VkAuthExchangeResult = ExternalAuthExchangeResult;
+
+export type YandexAuthInitRequest = ExternalAuthInitRequest;
+export type YandexAuthInitResult = ExternalAuthInitResult;
+export type YandexAuthExchangeRequest = ExternalAuthExchangeRequest;
+export type YandexAuthExchangeResult = ExternalAuthExchangeResult;

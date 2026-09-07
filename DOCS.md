@@ -277,7 +277,7 @@ type RequestedConfirmationMethod = Exclude<ConfirmationMethod, ConfirmationMetho
 // 'sms' | 'telegram' | 'whatsapp'
 ```
 
-Which channels a store accepts is exposed by `store.settings.authentication` — `sms`, `telegram` and `whatsapp` each carry an `enabled` flag (`vk` in the same object is social login, not a confirmation channel). Show a channel picker when two or more are enabled; with a single enabled channel, send it without asking. Requesting a channel the store does not support fails with `ZenkyError`, `err.http_code === 503` and `err.error_code === 'auth.otp_request.failed'`.
+Which channels a store accepts is exposed by `store.settings.authentication` — `sms`, `telegram` and `whatsapp` each carry an `enabled` flag (`vk` and `yandex` in the same object are social login, not confirmation channels). Show a channel picker when two or more are enabled; with a single enabled channel, send it without asking. Requesting a channel the store does not support fails with `ZenkyError`, `err.http_code === 503` and `err.error_code === 'auth.otp_request.failed'`.
 
 Omit `method` to let the backend pick the store default. Read the `method` returned in the response to tell the customer where the code actually went — that is the only way to know the default the store picked.
 
@@ -361,6 +361,26 @@ zenky.auth.vkExchange(request: VkAuthExchangeRequest): Promise<VkAuthExchangeRes
 ```
 
 Exchanges the `state` and `code` returned by VK for a customer Bearer token. The pair is single-use and expires after 15 minutes. `storeId` is not required — the `state`/`code` pair is self-sufficient.
+
+#### `yandexInit`
+
+```ts
+zenky.auth.yandexInit(storeId: string, request: YandexAuthInitRequest): Promise<YandexAuthInitResult>
+```
+
+Starts Yandex ID login. Returns `{ store_id, auth_url }`; redirect the customer to `auth_url` as-is.
+The `store_id` is sent in the request body (not in the URL path). Optional `token_type` defaults to `'storefront'`; `scopes` (comma-separated) applies only to `token_type: 'legacy'`.
+For WebView, set `redirect_url` to `https://storefront.zenky.io/v1/auth/yandex/blank` and track navigation to that URL.
+Enabled for the store when `store.settings.authentication.yandex.enabled` is `true`.
+
+#### `yandexExchange`
+
+```ts
+zenky.auth.yandexExchange(request: YandexAuthExchangeRequest): Promise<YandexAuthExchangeResult>
+```
+
+Exchanges the `state` and `code` returned by Yandex for a customer Bearer token. The pair is single-use and expires after 15 minutes. `storeId` is not required — the `state`/`code` pair is self-sufficient.
+Fails with `ZenkyError`, `err.http_code === 503` and `err.error_code === 'auth.external.phone_missing'` when the Yandex account has no phone number bound — show the customer an error and suggest choosing a different account.
 
 #### `useAuthenticationModal`
 
