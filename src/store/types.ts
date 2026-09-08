@@ -98,6 +98,9 @@ export interface StoreSettings {
     vk: {
       enabled: boolean;
     };
+    yandex: {
+      enabled: boolean;
+    };
     sms: {
       enabled: boolean;
     };
