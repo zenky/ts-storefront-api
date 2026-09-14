@@ -15,6 +15,7 @@ import { CatalogResource } from '../catalog/catalog.ts';
 import { LoyaltyResource } from '../loyalty/loyalty.ts';
 import { CreativesResource } from "../creatives/creatives.ts";
 import { CommerceEventsResource } from "../events/events.ts";
+import { MediaResource } from "../media/media.ts";
 
 export class ZenkyStorefront {
   public readonly client: Client;
@@ -33,6 +34,7 @@ export class ZenkyStorefront {
   public readonly loyalty: LoyaltyResource;
   public readonly creatives: CreativesResource;
   public readonly events: CommerceEventsResource;
+  public readonly media: MediaResource;
 
   constructor(config?: ClientConfig, fetcher?: any) {
     const client = Client.build(config, fetcher);
@@ -52,6 +54,7 @@ export class ZenkyStorefront {
     this.loyalty = new LoyaltyResource(client);
     this.creatives = new CreativesResource(client);
     this.events = new CommerceEventsResource(client);
+    this.media = new MediaResource(client);
 
     this.client = client;
   }

@@ -3,6 +3,7 @@ import { City, DeliveryZone, Stock } from "../store/types.ts";
 import { EvaluatedRestriction, Product, ProductModifiersRequest, ProductVariant } from "../products/types.ts";
 import { BasicModifiersGroup, Modifier } from "../modifiers/types.ts";
 import { Customer, Gender } from "../customers/types.ts";
+import { Media } from "../media/types.ts";
 import { ListRequest } from "../client/types.ts";
 import { ConfirmationMethod, RequestedConfirmationMethod } from "../authentication/types.ts";
 import {
@@ -208,7 +209,29 @@ export interface Order {
   progress?: OrderStatusProgress[];
   payments?: OrderPaymentTransaction[];
   promocode?: OrderPromocode | null;
+  can_review: boolean;
+  review?: OrderReview | null;
 }
+
+/**
+ * Отзыв на заказ. `images` — уже сохранённые фото в полном формате `Media`
+ * (large/xlarge/hd), не путать с `UploadedMedia` из media/types.ts — тем
+ * плоским {id,url,token}, что отдаёт сам upload-эндпоинт ДО отправки отзыва.
+ */
+export interface OrderReview {
+  id: string;
+  score: number | null;
+  comment: string | null;
+  reply: string | null;
+  images: Media[];
+  created_at?: string;
+  replied_at: string | null;
+}
+
+/** Хотя бы одно из двух полей обязательно — бэк тоже это валидирует. */
+export type SubmitOrderReviewRequest =
+  | { score: number; comment?: string }
+  | { score?: number; comment: string };
 
 export interface OrderPaymentMethod {
   id: PaymentMethod;

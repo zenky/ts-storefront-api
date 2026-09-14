@@ -18,6 +18,7 @@ import {
   OrderProductVariantRequest,
   OrderPromocode,
   OrderPromotionReward,
+  OrderReview,
   OrderSettings,
   ResendOrderConfirmationCodeRequest,
   SetOrderCustomerRequest,
@@ -26,6 +27,7 @@ import {
   SetOrderDeliveryTimeRequest,
   SetOrderPaymentsRequest,
   SetOrderPromocodeRequest,
+  SubmitOrderReviewRequest,
 } from "./types.ts";
 
 export class OrdersResource extends AbstractResource {
@@ -314,6 +316,18 @@ export class OrdersResource extends AbstractResource {
     await this.client.request('POST', url, request, this.getApiToken(credentials));
 
     return true;
+  }
+
+  async submitOrderReview(
+    storeId: string,
+    credentials: OrderCredentials,
+    request: SubmitOrderReviewRequest,
+  ): Promise<OrderReview> {
+    const url = this.getOrderUrl(storeId, credentials, '/review');
+
+    return this.getResponse<OrderReview>(
+      await this.client.request('POST', url, request, this.getApiToken(credentials)),
+    );
   }
 
   async getOrderBonusesTransactions(

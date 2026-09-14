@@ -74,10 +74,8 @@ export class Client {
     return `${path}${sign}${params.join('&')}`;
   }
 
-  async request(method: string, path: string, body?: any, apiToken?: string | null): Promise<any> {
-    const isExternalUrl = !path.startsWith('/');
-
-    const headers: any = {
+  private buildHeaders(apiToken?: string | null): Record<string, string> {
+    const headers: Record<string, string> = {
       Accept: 'application/json',
       'X-Zenky-Client': this.client,
       'X-Timezone': this.timezone,
@@ -88,6 +86,22 @@ export class Client {
     } else if (this.token) {
       headers['Authorization'] = `Bearer ${this.token}`;
     }
+
+    return headers;
+  }
+
+  private async handleResponse(response: any): Promise<any> {
+    if (response.ok) {
+      return response.status === 204 ? true : response.json();
+    }
+
+    throw await ZenkyErrorBuilder.build(response);
+  }
+
+  async request(method: string, path: string, body?: any, apiToken?: string | null): Promise<any> {
+    const isExternalUrl = !path.startsWith('/');
+
+    const headers = this.buildHeaders(apiToken);
 
     const options: any = {
       method,
@@ -106,10 +120,25 @@ export class Client {
 
     const response = await this.fetchFunction.call(null, fullUrl, options);
 
-    if (response.ok) {
-      return response.status === 204 ? true : response.json();
-    }
+    return this.handleResponse(response);
+  }
 
-    throw await ZenkyErrorBuilder.build(response);
+  /**
+   * Multipart-запрос (сейчас единственный потребитель — загрузка изображений
+   * в MediaResource.upload). Всегда POST на собственный store-URL — без
+   * Content-Type в заголовках, boundary выставляет сам fetch по FormData.
+   */
+  async requestMultipart(path: string, formData: FormData, apiToken?: string | null): Promise<any> {
+    const options: any = {
+      method: 'POST',
+      mode: 'cors',
+      ...this.fetchOptions,
+      headers: this.buildHeaders(apiToken),
+      body: formData,
+    };
+
+    const response = await this.fetchFunction.call(null, `${this.baseUrl}${path}`, options);
+
+    return this.handleResponse(response);
   }
 }

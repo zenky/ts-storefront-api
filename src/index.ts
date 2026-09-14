@@ -22,6 +22,7 @@ export * from './feedback/types.ts';
 export * from './feedback/feedback.ts';
 export * from './loyalty/types.ts';
 export * from './media/types.ts';
+export * from './media/media.ts';
 export * from './modifiers/types.ts';
 export * from './offers/types.ts';
 export * from './offers/offers.ts';

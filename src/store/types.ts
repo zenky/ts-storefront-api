@@ -45,6 +45,24 @@ export interface City {
   phones?: Phone[];
 }
 
+export type OrderReviewServiceType = '2gis' | 'yandex_maps' | 'google_maps' | 'flamp' | 'zoon';
+
+export interface OrderReviewDescription {
+  score: number;
+  description: string;
+}
+
+export interface OrderReviewServiceLink {
+  type: OrderReviewServiceType;
+  url: string;
+}
+
+export interface OrderReviewsServices {
+  min_score: number;
+  message: string;
+  links: OrderReviewServiceLink[];
+}
+
 export interface StoreSettings {
   country: string;
   currency: string;
@@ -62,6 +80,11 @@ export interface StoreSettings {
       legal: {
         accept_label: string | null;
       };
+    };
+    reviews: {
+      enabled: boolean;
+      descriptions: OrderReviewDescription[];
+      services: OrderReviewsServices;
     };
   };
   products: {
