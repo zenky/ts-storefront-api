@@ -166,6 +166,7 @@ export interface ListProductsRequest extends ListRequest {
   promotion_reward?: TernaryFilter;
   context_type?: ProductContextType;
   context_id?: string;
+  favorite?: boolean;
 }
 
 export interface ViewProductRequest extends InclusionRequest {

@@ -43,4 +43,20 @@ export class ProductsResource extends AbstractResource {
 
     return this.getResponse<EvaluatedRestriction[]>(await this.client.request('GET', url));
   }
+
+  async addFavorite(storeId: string, productId: string, apiToken?: string): Promise<boolean> {
+    const url = this.getStoreUrl(storeId, `/products/${productId}/favorite`);
+
+    await this.client.request('POST', url, null, apiToken);
+
+    return true;
+  }
+
+  async removeFavorite(storeId: string, productId: string, apiToken?: string): Promise<boolean> {
+    const url = this.getStoreUrl(storeId, `/products/${productId}/favorite`);
+
+    await this.client.request('DELETE', url, null, apiToken);
+
+    return true;
+  }
 }

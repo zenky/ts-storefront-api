@@ -145,3 +145,8 @@ export interface PushCampaignsCounters {
 export interface TrackPushCampaignsRequest {
   campaign_id?: string | null;
 }
+
+export interface FavoritedItem {
+  type: 'product';
+  id: string;
+}

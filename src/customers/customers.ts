@@ -5,6 +5,7 @@ import { BonusesTransaction, ListCustomerBonusesTransactionsRequest } from "../l
 import {
   Customer, CustomerPaymentMethod,
   CustomerSettings, DeliveryAddressRequest,
+  FavoritedItem,
   PushCampaign, PushCampaignsCounters,
   RemoveCustomerProfileRequest, ResolverBonusesBalance,
   TrackPushCampaignsRequest,
@@ -95,6 +96,12 @@ export class CustomersResource extends AbstractResource {
     const url = this.getStoreUrl(storeId, '/me/loyalty/balance');
 
     return this.getResponse<ResolverBonusesBalance>(await this.client.request('GET', url, null, apiToken));
+  }
+
+  async getFavorites(storeId: string, apiToken?: string): Promise<FavoritedItem[]> {
+    const url = this.getStoreUrl(storeId, '/me/favorites');
+
+    return this.getResponse<FavoritedItem[]>(await this.client.request('GET', url, null, apiToken));
   }
 
   async revokeToken(storeId: string, apiToken?: string): Promise<boolean> {
