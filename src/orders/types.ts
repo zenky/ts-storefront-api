@@ -213,11 +213,7 @@ export interface Order {
   review?: OrderReview | null;
 }
 
-/**
- * Отзыв на заказ. `images` — уже сохранённые фото в полном формате `Media`
- * (large/xlarge/hd), не путать с `UploadedMedia` из media/types.ts — тем
- * плоским {id,url,token}, что отдаёт сам upload-эндпоинт ДО отправки отзыва.
- */
+/** `images` — уже сохранённые фото в формате `Media`, не путать с `UploadedMedia` из media/types.ts. */
 export interface OrderReview {
   id: string;
   score: number | null;
@@ -228,10 +224,11 @@ export interface OrderReview {
   replied_at: string | null;
 }
 
-/** Хотя бы одно из двух полей обязательно — бэк тоже это валидирует. */
-export type SubmitOrderReviewRequest =
-  | { score: number; comment?: string }
-  | { score?: number; comment: string };
+/** Хотя бы одно из двух полей обязательно — валидирует бэк. */
+export interface SubmitOrderReviewRequest {
+  score?: number;
+  comment?: string;
+}
 
 export interface OrderPaymentMethod {
   id: PaymentMethod;

@@ -57,7 +57,7 @@ export interface OrderReviewServiceLink {
   url: string;
 }
 
-export interface OrderReviewsServices {
+export interface OrderReviewServices {
   min_score: number;
   message: string;
   links: OrderReviewServiceLink[];
@@ -84,7 +84,7 @@ export interface StoreSettings {
     reviews: {
       enabled: boolean;
       descriptions: OrderReviewDescription[];
-      services: OrderReviewsServices;
+      services: OrderReviewServices;
     };
   };
   products: {

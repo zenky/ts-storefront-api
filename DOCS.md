@@ -852,6 +852,18 @@ zenky.orders.cancelOrder(storeId: string, credentials: OrderCredentials): Promis
 
 Cancels an order.
 
+#### `submitOrderReview`
+
+```ts
+zenky.orders.submitOrderReview(
+  storeId: string,
+  credentials: OrderCredentials,
+  request: SubmitOrderReviewRequest,
+): Promise<OrderReview>
+```
+
+Submits a review for an order — only allowed while `Order.can_review` is `true` (orders in the `completed` status). `request` needs at least one of `score` (1-5) or `comment`; the API validates that too. Photos are attached beforehand via `MediaResource.upload` (`owner_type: 'order'`, `owner_id: <orderId>`, `collection: 'order_reviews'`) and come back on the order through the `review` inclusion (`with=review` on `getOrder`/`getOrders`), which also carries the store's `reply`/`replied_at` once answered.
+
 #### `resendOrderConfirmationCode`
 
 ```ts
@@ -1284,6 +1296,26 @@ Each `CommerceEvent` requires `event_id`, `event_name` (see `CommerceEventName`)
 The response includes per-event outcome (`accepted` / `duplicate` / `rejected` / `failed`) via `items[]`, plus aggregate counts.
 
 To attribute guest activity to a submitted order, forward the same `session_id` / `anonymous_id` to `checkoutOrder` via `OrderCheckoutRequest`.
+
+### Media
+
+File uploads. Currently scoped to order-review photos only (`owner_type: 'order'`, `collection: 'order_reviews'`); other owner types/collections aren't accepted by the API yet.
+
+#### `upload`
+
+```ts
+zenky.media.upload(storeId: string, request: UploadMediaRequest, apiToken?: string | null): Promise<UploadedMedia>
+```
+
+Uploads a JPEG/PNG file (max 12 MB) as `multipart/form-data`. `request.owner_id` is the id of the entity the file is attached to (an order id for review photos). Returns `{ id, url, token }` — `token` is a one-time delete token, not `apiToken`, and must be passed to `delete()` to remove the file.
+
+#### `delete`
+
+```ts
+zenky.media.delete(storeId: string, mediaId: string, token: string, apiToken?: string | null): Promise<boolean>
+```
+
+Deletes an uploaded file. `token` is the delete token returned by `upload()`, not `apiToken` — without it the request is rejected.
 
 ## Example IDs Used in This Document
 

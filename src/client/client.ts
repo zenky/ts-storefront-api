@@ -123,11 +123,7 @@ export class Client {
     return this.handleResponse(response);
   }
 
-  /**
-   * Multipart-запрос (сейчас единственный потребитель — загрузка изображений
-   * в MediaResource.upload). Всегда POST на собственный store-URL — без
-   * Content-Type в заголовках, boundary выставляет сам fetch по FormData.
-   */
+  /** Без Content-Type в заголовках — boundary выставляет сам fetch по FormData. */
   async requestMultipart(path: string, formData: FormData, apiToken?: string | null): Promise<any> {
     const options: any = {
       method: 'POST',
