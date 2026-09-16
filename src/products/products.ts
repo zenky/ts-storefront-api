@@ -11,10 +11,10 @@ import {
 import { PaginatedResponse } from "../client/types.ts";
 
 export class ProductsResource extends AbstractResource {
-  async getProducts(storeId: string, request?: ListProductsRequest): Promise<PaginatedResponse<Product>> {
+  async getProducts(storeId: string, request?: ListProductsRequest, apiToken?: string | null): Promise<PaginatedResponse<Product>> {
     const url = this.getStoreUrl(storeId, '/products', request);
 
-    return this.getPaginatedResponse<Product>(await this.client.request('GET', url));
+    return this.getPaginatedResponse<Product>(await this.client.request('GET', url, undefined, apiToken));
   }
 
   async getProduct(storeId: string, productId: string, request?: ViewProductRequest): Promise<Product> {
