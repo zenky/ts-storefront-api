@@ -138,6 +138,7 @@ export interface StoreSettings {
 
 export interface Store {
   id: string;
+  version: string;
   name: string;
   domain: string | null;
   app_store_url: string | null;
