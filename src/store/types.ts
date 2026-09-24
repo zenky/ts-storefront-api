@@ -178,3 +178,26 @@ export enum LegalDocumentType {
 }
 
 export type AvailableLegalDocumentType = Exclude<LegalDocumentType, LegalDocumentType.LoyaltyRules>;
+
+export interface MultiBrandSalesChannel {
+  id: string;
+  sales_channel_id: string;
+}
+
+export interface MultiBrandStore {
+  id: string;
+  primary: boolean;
+  slug: string;
+  name: string;
+  description: string | null;
+  logo: Media | null;
+  links: Contact[];
+  phones: Phone[];
+  website: MultiBrandSalesChannel | null;
+  mobile_app: MultiBrandSalesChannel | null;
+}
+
+export interface MultiBrand {
+  id: string;
+  stores: MultiBrandStore[];
+}

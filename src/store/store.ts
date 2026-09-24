@@ -1,5 +1,5 @@
 import { AbstractResource } from "../client/resource.ts";
-import { Store, LegalProfile, LegalDocument } from "./types.ts";
+import { Store, LegalProfile, LegalDocument, MultiBrand } from "./types.ts";
 
 export class StoreResource extends AbstractResource {
   async getStore(storeId: string): Promise<Store> {
@@ -12,6 +12,18 @@ export class StoreResource extends AbstractResource {
     const url = this.client.getUrl(`/store/by-bundle/${bundleId}`);
 
     return this.getResponse<Store>(await this.client.request('GET', url));
+  }
+
+  async getMultiBrand(storeId: string): Promise<MultiBrand> {
+    const url = this.getStoreUrl(storeId, '/multi-brand');
+
+    return this.getResponse<MultiBrand>(await this.client.request('GET', url));
+  }
+
+  async getMultiBrandByBundleId(bundleId: string): Promise<MultiBrand> {
+    const url = this.client.getUrl(`/store/by-bundle/${bundleId}/multi-brand`);
+
+    return this.getResponse<MultiBrand>(await this.client.request('GET', url));
   }
 
   async getLegalProfile(storeId: string): Promise<LegalProfile> {

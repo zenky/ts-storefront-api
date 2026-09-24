@@ -5,9 +5,11 @@ import { BonusesTransaction, ListCustomerBonusesTransactionsRequest } from "../l
 import {
   Customer, CustomerPaymentMethod,
   CustomerSettings, DeliveryAddressRequest,
+  ExchangeTokenRequest,
   FavoritedItem,
   PushCampaign, PushCampaignsCounters,
   RemoveCustomerProfileRequest, ResolverBonusesBalance,
+  TokenExchangeResult,
   TrackPushCampaignsRequest,
   UpdateCustomerProfileRequest,
   UpdateCustomerSettingsRequest,
@@ -110,6 +112,12 @@ export class CustomersResource extends AbstractResource {
     await this.client.request('POST', url, null, apiToken);
 
     return true;
+  }
+
+  async exchangeToken(storeId: string, request: ExchangeTokenRequest, apiToken?: string): Promise<TokenExchangeResult> {
+    const url = this.getStoreUrl(storeId, '/me/tokens/exchange');
+
+    return this.getResponse<TokenExchangeResult>(await this.client.request('POST', url, request, apiToken));
   }
 
   async getPushCampaigns(storeId: string, request?: PaginationRequest, apiToken?: string): Promise<PaginatedResponse<PushCampaign>> {

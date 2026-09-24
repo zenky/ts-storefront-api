@@ -2,11 +2,13 @@ import { ApiError } from "../types.ts";
 
 export class ZenkyError extends Error {
   public readonly err: ApiError | null;
+  public readonly status: number | null;
 
-  constructor(message: string, error: ApiError | null) {
+  constructor(message: string, error: ApiError | null, status: number | null = null) {
     super(message);
 
     this.err = error;
+    this.status = status;
   }
 }
 
@@ -19,11 +21,13 @@ export class ZenkyErrorBuilder {
         return new ZenkyError(
           json?.error?.message ?? json?.message ?? 'Unauthenticated.',
           json?.error ?? null,
+          response.status,
         );
       default:
         return new ZenkyError(
           json?.error?.message ?? json?.message,
           json?.error ?? null,
+          response.status,
         );
     }
   }

@@ -169,8 +169,11 @@ try {
   const err = error as ZenkyError;
   console.error(err.message);
   console.error(err.err); // ApiError | null
+  console.error(err.status); // HTTP status code, e.g. 401 (null for errors built manually)
 }
 ```
+
+`err.err` can be `null` — for example, a `401 Unauthenticated.` response has no `error` object — so use `err.status` to check the HTTP status.
 
 ## API Reference
 
@@ -191,6 +194,22 @@ zenky.store.getStoreByBundleId(bundleId: string): Promise<Store>
 ```
 
 Returns store data for a mobile app bundle identifier.
+
+#### `getMultiBrand`
+
+```ts
+zenky.store.getMultiBrand(storeId: string): Promise<MultiBrand>
+```
+
+Returns the multi-brand that the store belongs to, with the full list of its stores (`MultiBrandStore[]`: `id`, `primary`, `slug`, `name`, `description`, `logo`, `links`, `phones`, `website`, `mobile_app`). Works with the ID of any store in the multi-brand. Throws a `404` error with the `multi_brands.not_found` code if the store is not part of a multi-brand — use the regular (single-store) mode in that case.
+
+#### `getMultiBrandByBundleId`
+
+```ts
+zenky.store.getMultiBrandByBundleId(bundleId: string): Promise<MultiBrand>
+```
+
+Same as `getMultiBrand`, but resolves the store by a mobile app bundle identifier.
 
 ### Legal
 
@@ -603,6 +622,14 @@ zenky.customer.revokeToken(storeId: string, apiToken?: string): Promise<boolean>
 ```
 
 Revokes the current customer token (logs out).
+
+#### `exchangeToken`
+
+```ts
+zenky.customer.exchangeToken(storeId: string, request: ExchangeTokenRequest, apiToken?: string): Promise<TokenExchangeResult>
+```
+
+Exchanges the customer token of `storeId` for a token in another store of the same multi-brand (`request.target_store_id`). If the customer is not registered in the target store yet, they are registered automatically. Pass the source store token as `apiToken`. Returns `{ token }` for the target store; throws `403` if the target store belongs to another multi-brand.
 
 ### Catalog
 

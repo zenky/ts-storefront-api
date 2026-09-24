@@ -150,3 +150,11 @@ export interface FavoritedItem {
   type: 'product';
   id: string;
 }
+
+export interface ExchangeTokenRequest {
+  target_store_id: string;
+}
+
+export interface TokenExchangeResult {
+  token: string;
+}
