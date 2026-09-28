@@ -201,7 +201,7 @@ Returns store data for a mobile app bundle identifier.
 zenky.store.getMultiBrand(storeId: string): Promise<MultiBrand>
 ```
 
-Returns the multi-brand that the store belongs to, with the full list of its stores (`MultiBrandStore[]`: `id`, `primary`, `slug`, `name`, `description`, `logo`, `links`, `phones`, `website`, `mobile_app`). Works with the ID of any store in the multi-brand. Throws a `404` error with the `multi_brands.not_found` code if the store is not part of a multi-brand — use the regular (single-store) mode in that case.
+Returns the multi-brand that the store belongs to: SEO of the multi-brand home page (`seo: Seo | null`), favicon URL (`favicon_url`) and the full list of its stores (`MultiBrandStore[]`: `id`, `primary`, `slug`, `name`, `description`, `images`, `links`, `phones`, `website`, `mobile_app`). `images` holds plain URLs, each `string | null`: `logo`, `logo_dark` (for dark backgrounds), `horizontal_card`, `vertical_card`. Works with the ID of any store in the multi-brand. Throws a `404` error with the `multi_brands.not_found` code if the store is not part of a multi-brand — use the regular (single-store) mode in that case.
 
 #### `getMultiBrandByBundleId`
 

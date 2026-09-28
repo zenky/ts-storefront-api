@@ -1,5 +1,6 @@
 import { Media } from "../media/types.ts";
 import { RemoteCatalog } from '../catalog/types.ts';
+import { Seo } from "../seo/types.ts";
 import {
   AddressesProvider,
   Contact,
@@ -184,13 +185,20 @@ export interface MultiBrandSalesChannel {
   sales_channel_id: string;
 }
 
+export interface MultiBrandStoreImages {
+  logo: string | null;
+  logo_dark: string | null;
+  horizontal_card: string | null;
+  vertical_card: string | null;
+}
+
 export interface MultiBrandStore {
   id: string;
   primary: boolean;
   slug: string;
   name: string;
   description: string | null;
-  logo: Media | null;
+  images: MultiBrandStoreImages;
   links: Contact[];
   phones: Phone[];
   website: MultiBrandSalesChannel | null;
@@ -199,5 +207,7 @@ export interface MultiBrandStore {
 
 export interface MultiBrand {
   id: string;
+  seo: Seo | null;
+  favicon_url: string | null;
   stores: MultiBrandStore[];
 }
