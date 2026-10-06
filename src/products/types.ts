@@ -90,6 +90,25 @@ export interface GetProductRestrictionsRequest {
   city_id: string;
 }
 
+export type ProductBadgeIconType = 'emoji' | 'image' | (string & {});
+
+export interface ProductBadgeIcon {
+  type: ProductBadgeIconType;
+  value: string;
+}
+
+export interface ProductBadgeColors {
+  text: string;
+  background: string;
+}
+
+export interface ProductBadge {
+  id: string;
+  label: string | null;
+  colors: ProductBadgeColors;
+  icon: ProductBadgeIcon | null;
+}
+
 export enum ProductCustomFieldType {
   Text = 'text',
   Multiline = 'multiline',
@@ -144,6 +163,7 @@ export interface Product {
   features_groups: FeaturesGroup[];
   custom_fields?: ProductCustomField[];
   restrictions?: ProductRestriction[];
+  badges?: ProductBadge[];
   modifiers?: ProductModifier[];
   modifiers_groups?: ProductModifiersGroup[];
   seo?: Seo;
