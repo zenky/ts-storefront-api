@@ -835,7 +835,7 @@ Creates a new order in a specific city.
 zenky.orders.getOrder(storeId: string, credentials: OrderCredentials, request?: InclusionRequest): Promise<Order>
 ```
 
-Returns full order data by credentials.
+Returns full order data by credentials. `with: 'packages'` loads `Order.packages` (read-only packaging lines attached by the backend, recalculated whenever cart contents or delivery method change).
 
 #### `addProductVariantToOrder`
 
@@ -1123,7 +1123,7 @@ Calculates how many bonuses can be applied and what amount remains unpaid.
 zenky.orders.getOrderTotal(storeId: string, credentials: OrderCredentials): Promise<OrderCheckoutTotal>
 ```
 
-Returns full checkout totals, including discounts, delivery, bonuses, and payments.
+Returns full checkout totals, including discounts, delivery, bonuses, and payments. `OrderCheckoutTotal.packaging_price` is the packaging cost already included in `total`.
 
 ### Loyalty Transactions and Rewards
 
