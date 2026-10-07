@@ -75,11 +75,23 @@ export interface NutritionFacts {
   carbohydrates: number | null;
 }
 
-export type RestrictionType = 'schedule' | (string & {});
+export type RestrictionType = 'schedule' | 'dates' | 'delivery_methods' | (string & {});
+
+export type RestrictionDeliveryMethod = 'pickup' | 'delivery' | 'on_premise';
+
+export interface RestrictionPeriod {
+  start: string;
+  end: string;
+}
 
 export interface ProductRestriction {
   id: RestrictionType;
+  label: string;
   message: string;
+  periods?: RestrictionPeriod[];
+  use_city_timezone?: boolean;
+  timezone?: string | null;
+  allowed_delivery_methods?: RestrictionDeliveryMethod[];
 }
 
 export interface EvaluatedRestriction extends ProductRestriction {
