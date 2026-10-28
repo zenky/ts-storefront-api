@@ -8,6 +8,7 @@ import { DeliveryMethod, OrderDeliveryInterval } from "./delivery.ts";
 import { OrderStatus, OrderStatusChange, OrderStatusProgress } from "./status.ts";
 import { OrderPaymentTransaction } from "./payments.ts";
 import { OrderPromocode } from "./promotions.ts";
+import { AttachedOrderField } from "./fields.ts";
 import { OrderReview } from "./reviews.ts";
 
 export type OrderCredentials = string | {
@@ -50,6 +51,7 @@ export interface Order {
   promocode?: OrderPromocode | null;
   can_review: boolean;
   review?: OrderReview | null;
+  fields?: AttachedOrderField[];
 }
 
 export interface ListOrdersRequest extends ListRequest {

@@ -931,6 +931,28 @@ zenky.orders.setOrderCustomer(
 
 Sets customer identity and contact details for checkout.
 
+### Checkout Preparation: Order Fields
+
+#### `setOrderFields`
+
+```ts
+zenky.orders.setOrderFields(
+  storeId: string,
+  credentials: OrderCredentials,
+  request: SetOrderFieldsRequest,
+): Promise<boolean>
+```
+
+Replaces all field values of the order with the passed `fields` (`{ id, value }`). Available fields come from `getOrderSettings().fields`, saved values are returned in `Order.fields` (`with: 'fields'`).
+
+#### `clearOrderFields`
+
+```ts
+zenky.orders.clearOrderFields(storeId: string, credentials: OrderCredentials): Promise<boolean>
+```
+
+Removes all field values from the order.
+
 ### Checkout Preparation: Address / Delivery
 
 #### `setOrderDeliveryMethod`

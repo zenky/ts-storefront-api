@@ -6,3 +6,4 @@ export * from './types/checkout.ts';
 export * from './types/status.ts';
 export * from './types/promotions.ts';
 export * from './types/reviews.ts';
+export * from './types/fields.ts';

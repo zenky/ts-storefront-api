@@ -5,6 +5,7 @@ import {
   ManualDeliveryAddressRequest,
 } from "../../addresses/types.ts";
 import { OrderPaymentMethod } from "./payments.ts";
+import { OrderFieldDefinition } from "./fields.ts";
 
 export enum DeliveryMethod {
   Delivery = 'delivery',
@@ -60,6 +61,7 @@ export interface OrderSettings {
   payment_methods: OrderPaymentMethod[];
   delivery_methods: OrderDeliveryMethod[];
   options: OrderOption[];
+  fields?: OrderFieldDefinition[];
 }
 
 export interface SetOrderDeliveryRequest {

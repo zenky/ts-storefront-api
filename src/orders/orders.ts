@@ -25,6 +25,7 @@ import {
   SetOrderDeliveryIntervalRequest,
   SetOrderDeliveryRequest,
   SetOrderDeliveryTimeRequest,
+  SetOrderFieldsRequest,
   SetOrderPaymentsRequest,
   SetOrderPromocodeRequest,
   SubmitOrderReviewRequest,
@@ -127,6 +128,26 @@ export class OrdersResource extends AbstractResource {
     const url = this.getOrderUrl(storeId, credentials, '/checkout/customer');
 
     await this.client.request('POST', url, request, this.getApiToken(credentials));
+
+    return true;
+  }
+
+  async setOrderFields(
+    storeId: string,
+    credentials: OrderCredentials,
+    request: SetOrderFieldsRequest,
+  ): Promise<boolean> {
+    const url = this.getOrderUrl(storeId, credentials, '/checkout/fields');
+
+    await this.client.request('POST', url, request, this.getApiToken(credentials));
+
+    return true;
+  }
+
+  async clearOrderFields(storeId: string, credentials: OrderCredentials): Promise<boolean> {
+    const url = this.getOrderUrl(storeId, credentials, '/checkout/fields');
+
+    await this.client.request('DELETE', url, undefined, this.getApiToken(credentials));
 
     return true;
   }
