@@ -79,6 +79,7 @@ export enum OrderAuthenticationMethod {
 
 export enum AddressesProvider {
   Dadata = 'dadata',
+  Plain = 'plain',
   Manual = 'manual',
 }
 

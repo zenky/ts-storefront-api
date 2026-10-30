@@ -45,6 +45,12 @@ export interface ManualDeliveryAddressRequest {
   has_intercom?: boolean;
 }
 
+export interface PlainDeliveryAddressRequest extends ManualDeliveryAddressRequest {
+  city: string;
+  street: string;
+  house: string;
+}
+
 export interface DadataAddressSuggestion {
   value: string | null;
   unrestricted_value: string | null;
