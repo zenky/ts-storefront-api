@@ -573,6 +573,8 @@ export interface Offer {
   id: string;
   short_id: string;
   slug: string | null;
+  start_date?: string | null;
+  end_date?: string | null;
   banners: {
     desktop: OfferBanner | null;
     mobile: OfferBanner | null;
@@ -676,6 +678,7 @@ export interface Product {
   seo?: Seo;
 }
 export interface ListProductsRequest extends ListRequest {
+  offer_id?: string;
   category_id?: string;
   features?: {
     [key: string]: string;

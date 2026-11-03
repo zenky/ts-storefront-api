@@ -182,6 +182,7 @@ export interface Product {
 }
 
 export interface ListProductsRequest extends ListRequest {
+  offer_id?: string;
   category_id?: string;
   features?: {
     [key: string]: string;
