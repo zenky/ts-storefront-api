@@ -70,6 +70,7 @@ export interface StoreSettings {
   orders: {
     authentication_method: OrderAuthenticationMethod;
     use_early_delivery: boolean;
+    auto_select_sole_city_stock?: boolean;
     addresses_provider: AddressesProvider;
     repeats: {
       enabled: boolean;
