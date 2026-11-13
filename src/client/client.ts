@@ -1,5 +1,5 @@
-import { ClientConfig } from "./types.ts";
-import { ZenkyErrorBuilder } from "./errors.ts";
+import { ClientConfig } from './types.ts';
+import { ZenkyErrorBuilder } from './errors.ts';
 
 export class Client {
   private readonly baseUrl: string;
@@ -7,6 +7,7 @@ export class Client {
   private token: string | null;
   private readonly client: string;
   private readonly timezone: string;
+  private readonly locale: string;
   private readonly fetchFunction: any;
   private readonly fetchOptions: any;
 
@@ -17,6 +18,7 @@ export class Client {
       config?.token || null,
       config?.client || 'web',
       config?.timezone || 'UTC',
+      config?.locale || 'ru',
       fetcher,
       config?.fetchOptions,
     );
@@ -28,6 +30,7 @@ export class Client {
     token: string | null,
     client: string,
     timezone: string,
+    locale: string,
     fetcher?: any,
     fetchOptions?: any,
   ) {
@@ -36,6 +39,7 @@ export class Client {
     this.token = token;
     this.client = client;
     this.timezone = timezone;
+    this.locale = locale;
     this.fetchFunction = typeof fetcher === 'function' ? fetcher : fetch;
     this.fetchOptions = typeof fetchOptions !== 'undefined' ? fetchOptions : {};
   }
@@ -44,6 +48,10 @@ export class Client {
     this.token = token;
 
     return this;
+  }
+
+  getLocale(): string {
+    return this.locale;
   }
 
   getBaseAuthUrl(): string {
@@ -79,6 +87,7 @@ export class Client {
       Accept: 'application/json',
       'X-Zenky-Client': this.client,
       'X-Timezone': this.timezone,
+      'X-Locale': this.locale,
     };
 
     if (apiToken) {
@@ -114,7 +123,7 @@ export class Client {
       options['body'] = JSON.stringify(body);
     }
 
-    options.headers = isExternalUrl ? { 'Accept': 'application/json' } : headers;
+    options.headers = isExternalUrl ? { Accept: 'application/json' } : headers;
 
     const fullUrl = isExternalUrl ? path : `${this.baseUrl}${path}`;
 

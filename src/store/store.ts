@@ -1,11 +1,20 @@
-import { AbstractResource } from "../client/resource.ts";
-import { Store, LegalProfile, LegalDocument, MultiBrand } from "./types.ts";
+import { AbstractResource } from '../client/resource.ts';
+import { Store, LegalProfile, LegalDocument, MultiBrand, ShowStoreRequest } from './types.ts';
 
 export class StoreResource extends AbstractResource {
-  async getStore(storeId: string): Promise<Store> {
-    const url = this.client.getUrl(`/store/${storeId}`);
+  async getStore(storeId: string, request: ShowStoreRequest = {}): Promise<Store> {
+    const url = this.client.getUrl(`/store/${storeId}`, request);
 
     return this.getResponse<Store>(await this.client.request('GET', url));
+  }
+
+  async getWebsitePage<T = unknown>(
+    storeId: string,
+    websiteId: string,
+    pageId: string,
+  ): Promise<T> {
+    const url = this.getStoreUrl(storeId, `/websites/${websiteId}/pages/${pageId}`);
+    return this.getResponse<T>(await this.client.request('GET', url));
   }
 
   async getStoreByBundleId(bundleId: string): Promise<Store> {

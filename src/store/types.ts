@@ -1,6 +1,6 @@
-import { Media } from "../media/types.ts";
+import { Media } from '../media/types.ts';
 import { RemoteCatalog } from '../catalog/types.ts';
-import { Seo } from "../seo/types.ts";
+import { Seo } from '../seo/types.ts';
 import {
   AddressesProvider,
   Contact,
@@ -9,7 +9,7 @@ import {
   Phone,
   RecaptchaAction,
   Schedule,
-} from "../types.ts";
+} from '../types.ts';
 
 export interface Stock {
   id: string;
@@ -64,7 +64,19 @@ export interface OrderReviewServices {
   links: OrderReviewServiceLink[];
 }
 
+export interface StoreLocales {
+  primary: string;
+  additional: string[];
+}
+
+export interface ShowStoreRequest {
+  with?: string;
+  website_id?: string;
+  last_version?: string;
+}
+
 export interface StoreSettings {
+  locales?: StoreLocales;
   country: string;
   currency: string;
   orders: {
@@ -100,7 +112,7 @@ export interface StoreSettings {
     bonuses: {
       on_demand_balance_enabled: boolean;
       pin_enabled: boolean;
-    },
+    };
   };
   recaptcha: {
     actions: RecaptchaAction[];

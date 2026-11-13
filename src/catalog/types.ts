@@ -24,4 +24,5 @@ export interface RemoteCatalog {
   city_id: string | null;
   stock_id: string | null;
   url: string;
+  locale?: string | null;
 }

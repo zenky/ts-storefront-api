@@ -4,6 +4,7 @@ export interface ClientConfig {
   token?: string;
   client?: string;
   timezone?: string;
+  locale?: string;
   fetchOptions?: any;
 }
 
@@ -24,7 +25,8 @@ export interface OrderingRequest {
   order_by?: string;
 }
 
-export interface ListRequest extends PaginationRequest, InclusionRequest, SearchRequest, OrderingRequest {
+export interface ListRequest
+  extends PaginationRequest, InclusionRequest, SearchRequest, OrderingRequest {
   //
 }
 
