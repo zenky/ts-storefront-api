@@ -197,6 +197,8 @@ export interface ListProductsRequest extends ListRequest {
   max_price?: number | string;
   featured_categories?: boolean;
   promotion_reward?: TernaryFilter;
+  promotion_id?: string;
+  promotion_reward_id?: string;
   context_type?: ProductContextType;
   context_id?: string;
   favorite?: boolean;

@@ -24,6 +24,7 @@ export interface OrderProductVariant {
     reward_id: string;
   } | null;
   is_reward: boolean;
+  is_free_reward: boolean;
   is_promocode_reward: boolean;
   quantity: number;
   has_measured_quantity: boolean;

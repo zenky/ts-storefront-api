@@ -2,6 +2,7 @@ import { AbstractResource } from "../client/resource.ts";
 import { InclusionRequest, PaginatedResponse } from "../client/types.ts";
 import { BonusesTransaction, ListBonusesTransactionsRequest } from "../loyalty/types.ts";
 import {
+  CheckPromotionsSyncResponse,
   CloudpaymentsTransactionReceipt,
   ConfirmOrderRequest,
   CreateOrderRequest,
@@ -32,11 +33,20 @@ import {
 } from "./types.ts";
 
 export class OrdersResource extends AbstractResource {
-  protected getOrderUrl(storeId: string, credentials: OrderCredentials, path: string, request?: any): string {
+  protected getOrderUrl(
+    storeId: string,
+    credentials: OrderCredentials,
+    path: string,
+    request?: any,
+  ): string {
     const orderId = typeof credentials === 'string' ? credentials : credentials.id;
     const orderToken = typeof credentials === 'string' ? undefined : credentials.token;
 
-    return this.getStoreUrl(storeId, `/orders/${orderId}${path}${orderToken ? '?token=' + orderToken : ''}`, request);
+    return this.getStoreUrl(
+      storeId,
+      `/orders/${orderId}${path}${orderToken ? '?token=' + orderToken : ''}`,
+      request,
+    );
   }
 
   protected getApiToken(credentials: OrderCredentials): undefined | string {
@@ -47,19 +57,33 @@ export class OrdersResource extends AbstractResource {
     return credentials.api_token;
   }
 
-  async getOrders(storeId: string, request?: ListOrdersRequest, apiToken?: string | null): Promise<PaginatedResponse<Order>> {
+  async getOrders(
+    storeId: string,
+    request?: ListOrdersRequest,
+    apiToken?: string | null,
+  ): Promise<PaginatedResponse<Order>> {
     const url = this.getStoreUrl(storeId, '/orders', request);
 
-    return this.getPaginatedResponse<Order>(await this.client.request('GET', url, undefined, apiToken));
+    return this.getPaginatedResponse<Order>(
+      await this.client.request('GET', url, undefined, apiToken),
+    );
   }
 
-  async createOrder(storeId: string, request: CreateOrderRequest, apiToken?: string | null): Promise<Order> {
+  async createOrder(
+    storeId: string,
+    request: CreateOrderRequest,
+    apiToken?: string | null,
+  ): Promise<Order> {
     const url = this.getStoreUrl(storeId, '/orders');
 
     return this.getResponse(await this.client.request('POST', url, request, apiToken));
   }
 
-  async getOrder(storeId: string, credentials: OrderCredentials, request?: InclusionRequest): Promise<Order> {
+  async getOrder(
+    storeId: string,
+    credentials: OrderCredentials,
+    request?: InclusionRequest,
+  ): Promise<Order> {
     const url = this.getOrderUrl(storeId, credentials, '', request);
 
     return this.getResponse<Order>(
@@ -110,11 +134,20 @@ export class OrdersResource extends AbstractResource {
     );
   }
 
-  async getOrderCheckoutUrl(storeId: string, credentials: OrderCredentials, redirectUrl?: string): Promise<string> {
+  async getOrderCheckoutUrl(
+    storeId: string,
+    credentials: OrderCredentials,
+    redirectUrl?: string,
+  ): Promise<string> {
     const url = this.getOrderUrl(storeId, credentials, '/checkout/url');
 
     const response = this.getResponse<{ url: string }>(
-      await this.client.request('POST', url, {redirect_url: redirectUrl}, this.getApiToken(credentials)),
+      await this.client.request(
+        'POST',
+        url,
+        { redirect_url: redirectUrl },
+        this.getApiToken(credentials),
+      ),
     );
 
     return response.url;
@@ -205,10 +238,7 @@ export class OrdersResource extends AbstractResource {
     );
   }
 
-  async resetOrderDeliveryTime(
-    storeId: string,
-    credentials: OrderCredentials,
-  ): Promise<boolean> {
+  async resetOrderDeliveryTime(storeId: string, credentials: OrderCredentials): Promise<boolean> {
     const url = this.getOrderUrl(storeId, credentials, '/checkout/delivery/time');
 
     await this.client.request('DELETE', url, null, this.getApiToken(credentials));
@@ -255,7 +285,7 @@ export class OrdersResource extends AbstractResource {
   async removeOrderPromocode(storeId: string, credentials: OrderCredentials): Promise<boolean> {
     const url = this.getOrderUrl(storeId, credentials, '/checkout/promocode');
 
-    await this.client.request('DELETE', url, null, this.getApiToken(credentials))
+    await this.client.request('DELETE', url, null, this.getApiToken(credentials));
 
     return true;
   }
@@ -265,17 +295,14 @@ export class OrdersResource extends AbstractResource {
     credentials: OrderCredentials,
     amount: number | string,
   ): Promise<OrderCheckoutBonusesPreview> {
-    const url = this.getOrderUrl(storeId, credentials, `/checkout/payments/bonuses`, {amount});
+    const url = this.getOrderUrl(storeId, credentials, `/checkout/payments/bonuses`, { amount });
 
     return this.getResponse<OrderCheckoutBonusesPreview>(
       await this.client.request('GET', url, undefined, this.getApiToken(credentials)),
     );
   }
 
-  async getOrderTotal(
-    storeId: string,
-    credentials: OrderCredentials,
-  ): Promise<OrderCheckoutTotal> {
+  async getOrderTotal(storeId: string, credentials: OrderCredentials): Promise<OrderCheckoutTotal> {
     const url = this.getOrderUrl(storeId, credentials, `/checkout/total`);
 
     return this.getResponse<OrderCheckoutTotal>(
@@ -307,10 +334,7 @@ export class OrdersResource extends AbstractResource {
     return true;
   }
 
-  async cancelOrder(
-    storeId: string,
-    credentials: OrderCredentials,
-  ): Promise<boolean> {
+  async cancelOrder(storeId: string, credentials: OrderCredentials): Promise<boolean> {
     const url = this.getOrderUrl(storeId, credentials, `/cancel`);
 
     await this.client.request('POST', url, undefined, this.getApiToken(credentials));
@@ -374,10 +398,18 @@ export class OrdersResource extends AbstractResource {
     );
   }
 
-  async dispatchPromotionsChecker(
+  async checkPromotionsSync(
     storeId: string,
     credentials: OrderCredentials,
-  ) {
+  ): Promise<CheckPromotionsSyncResponse> {
+    const url = this.getOrderUrl(storeId, credentials, '/loyalty/promotions/check/sync');
+
+    return this.getResponse<CheckPromotionsSyncResponse>(
+      await this.client.request('POST', url, undefined, this.getApiToken(credentials)),
+    );
+  }
+
+  async dispatchPromotionsChecker(storeId: string, credentials: OrderCredentials) {
     const url = this.getOrderUrl(storeId, credentials, `/loyalty/promotions/check`);
 
     return this.getResponse<{ dispatched: boolean }>(

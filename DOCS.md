@@ -1169,6 +1169,22 @@ zenky.orders.getOrderCashbackTransaction(storeId: string, credentials: OrderCred
 
 Returns cashback transaction data for the order.
 
+#### `checkPromotionsSync`
+
+```ts
+zenky.orders.checkPromotionsSync(storeId: string, credentials: OrderCredentials): Promise<CheckPromotionsSyncResponse>
+```
+
+Checks promotions synchronously via `POST /loyalty/promotions/check/sync`. The response contains
+`events` (`orders.reload`, `orders.rewards.reload`, `orders.rewards.display_selection`) and
+nullable `closest_promotion`. Process these events from the response rather than WebSocket.
+An empty `events` array completes the check without further actions.
+
+For reward selection, pass both `promotion_id` and `promotion_reward_id` to
+`products.getProducts`. Use the returned variant `price` and `original_price`.
+An order item's `is_reward` marks a reward; `is_free_reward` distinguishes a free reward.
+Paid rewards retain their actual `unit_price` and `total_price`.
+
 #### `dispatchPromotionsChecker`
 
 ```ts
