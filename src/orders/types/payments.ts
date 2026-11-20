@@ -6,6 +6,7 @@ export enum OrderPaymentTransactionType {
 export enum PaymentMethod {
   Cash = 'cash',
   CreditCard = 'credit-card',
+  MobileBank = 'mobile_bank',
   CloudPayments = 'cloudpayments',
   YooKassa = 'yookassa',
   CardToken = 'card_token',
