@@ -5,17 +5,19 @@ import { ListRequest } from "../../client/types.ts";
 import { DeliveryAddress } from "../../addresses/types.ts";
 import { OrderPackage, OrderProductVariant } from "./items.ts";
 import { DeliveryMethod, OrderDeliveryInterval } from "./delivery.ts";
-import { OrderStatus, OrderStatusChange, OrderStatusProgress } from "./status.ts";
+import { OrderStatusChange, OrderStatusProgress } from "./status.ts";
 import { OrderPaymentTransaction } from "./payments.ts";
 import { OrderPromocode } from "./promotions.ts";
 import { AttachedOrderField } from "./fields.ts";
 import { OrderReview } from "./reviews.ts";
 
-export type OrderCredentials = string | {
-  id: string;
-  token: string;
-  api_token?: string;
-}
+export type OrderCredentials =
+  | string
+  | {
+      id: string;
+      token: string;
+      api_token?: string;
+    };
 
 export interface Order {
   id: string;
@@ -45,10 +47,11 @@ export interface Order {
   delivery_address?: DeliveryAddress | null;
   delivery_zone?: DeliveryZone;
   delivery_interval?: OrderDeliveryInterval | null;
-  statuses?: OrderStatus[];
-  progress?: OrderStatusProgress[];
+  statuses?: OrderStatusChange[] | null;
+  progress?: OrderStatusProgress[] | null;
   payments?: OrderPaymentTransaction[];
   promocode?: OrderPromocode | null;
+  can_cancel: boolean;
   can_review: boolean;
   review?: OrderReview | null;
   fields?: AttachedOrderField[];
