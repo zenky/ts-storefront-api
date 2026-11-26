@@ -1145,7 +1145,7 @@ Calculates how many bonuses can be applied and what amount remains unpaid.
 zenky.orders.getOrderTotal(storeId: string, credentials: OrderCredentials): Promise<OrderCheckoutTotal>
 ```
 
-Returns full checkout totals, including discounts, delivery, bonuses, and payments. `OrderCheckoutTotal.packaging_price` is the packaging cost already included in `total`.
+Returns full checkout totals, including discounts, delivery, bonuses, and payments. `OrderCheckoutTotal.packaging_price` is the packaging cost already included in `total`. `min_price` and `free_delivery_price` are the order thresholds resolved by the backend (delivery zone, then city, then store settings); compare them with `discounted_products_total`, the products total after discounts. Whether a storefront should show these progress bars is controlled by `Store.settings.orders.progress_bars`.
 
 ### Loyalty Transactions and Rewards
 

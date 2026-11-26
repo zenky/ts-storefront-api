@@ -14,6 +14,8 @@ export interface SetOrderCustomerRequest {
 
 export interface OrderCheckoutTotal {
   min_price: number | null;
+  free_delivery_price?: number | null;
+  discounted_products_total?: number;
   subtotal: number;
   original_subtotal: number | null;
   delivery_price: number | null;

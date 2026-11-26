@@ -75,6 +75,12 @@ export interface ShowStoreRequest {
   last_version?: string;
 }
 
+export interface StoreOrderProgressBarsSettings {
+  min_price_enabled: boolean;
+  free_delivery_price_enabled: boolean;
+  closest_promotion_enabled: boolean;
+}
+
 export interface StoreSettings {
   locales?: StoreLocales;
   country: string;
@@ -84,6 +90,7 @@ export interface StoreSettings {
     use_early_delivery: boolean;
     auto_select_sole_city_stock?: boolean;
     addresses_provider: AddressesProvider;
+    progress_bars?: StoreOrderProgressBarsSettings;
     repeats: {
       enabled: boolean;
     };
